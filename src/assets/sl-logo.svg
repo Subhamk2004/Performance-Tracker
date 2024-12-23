@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+  <!-- Left Curly Bracket -->
+  <path d="M60 30 C60 30, 80 30, 80 45 L80 60 C80 75, 100 75, 100 75 C100 75, 80 75, 80 90 L80 105 C80 120, 60 120, 60 120" stroke="#98FF98" fill="none" stroke-width="15"/>
+  
+  <!-- Right Curly Bracket -->
+  <path d="M240 30 C240 30, 220 30, 220 45 L220 60 C220 75, 200 75, 200 75 C200 75, 220 75, 220 90 L220 105 C220 120, 240 120, 240 120" stroke="#98FF98" fill="none" stroke-width="15"/>
+  
+  <!-- Letters -->
+  <text x="110" y="85" font-family="Arial, sans-serif" font-size="50" font-weight="bold" fill="white">S</text>
+  <text x="180" y="85" font-family="Arial, sans-serif" font-size="50" font-weight="bold" fill="white">l</text>
+  
+  <!-- Dot -->
+  <circle cx="150" cy="75" r="6" fill="#98FF98"/>
+</svg>
