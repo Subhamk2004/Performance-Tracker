@@ -110,11 +110,11 @@ function Dashboard() {
             />
           </div>
         </div>
-        <div className='my-8 flex flex-row justify-around items-center flex-wrap gap-4'>
+        <div className='my-8 flex flex-row items-center flex-wrap gap-8'>
           <StreakCard />
           <DashboardBtn />
         </div>
-        <h2 className='mt-10 mb-4 flex flex-row items-center gap-3 text-white text-xl font-semibold'>
+        <h2 className='mt-4 mb-4 flex flex-row items-center gap-3 text-white text-xl font-semibold'>
           <Github size='24' className='text-white' />
           Recent GitHub Activity
         </h2>

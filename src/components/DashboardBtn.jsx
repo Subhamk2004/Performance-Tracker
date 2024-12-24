@@ -8,8 +8,8 @@ const AddTaskButton = () => {
 
     return (
         <button
-            onClick={() => navigate('/addtask')}
-            className="w-[360px] h-[360px] group relative bg-[#111525] hover:bg-gradient-to-tl from-secondary via-secondary to-secondary rounded-3xl p-6 shadow-lg transition-all duration-300  overflow-hidden"
+
+            className="w-[350px] h-[350px] group relative bg-[#111525] hover:bg-gradient-to-tl from-secondary via-secondary to-secondary rounded-3xl p-6 shadow-lg transition-all duration-300  overflow-hidden"
         >
             {/* Background decoration */}
             <div className="absolute top-0 right-0 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -26,21 +26,24 @@ const AddTaskButton = () => {
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-8">
-                    <div className="bg-[#050508] rounded-xl p-4">
+                    <button
+                        onClick={() => navigate('/alltask')} className="bg-[#050508] rounded-xl p-4">
 
                         <span className="text-gray-400 text-sm flex items-center gap-2">
                             <ListTodo className="w-6 h-6 text-white" />
                             Active Tasks
                         </span>
                         <p className="text-white text-lg font-bold mt-4">12</p>
-                    </div>
-                    <div className="bg-[#050508] rounded-xl p-4">
+                    </button>
+                    <button
+                        onClick={() => navigate('/alltask')}
+                        className="bg-[#050508] rounded-xl p-4">
                         <span className="text-gray-400 text-sm flex flex-row items-center gap-2">
-                            <Clock className="w-6 h-6 text-white" />
+                            <Clock className="w-5 h-5 text-white" />
                             Pending Task
                         </span>
                         <p className="text-white text-lg font-bold mt-4">5</p>
-                    </div>
+                    </button>
                 </div>
 
                 {/* Recent Activity */}
@@ -53,13 +56,15 @@ const AddTaskButton = () => {
                 </div> */}
 
                 {/* Add Button */}
-                <div className="mt-auto flex items-center justify-between bg-[#050508] rounded-xl p-4 group-hover:bg-white transition-colors">
+                <button
+                    onClick={() => navigate('/addtask')}
+                    className="mt-auto flex items-center justify-between bg-[#050508] rounded-xl p-4 group-hover:bg-white transition-colors">
                     <div className="flex items-center gap-2">
                         <Plus className="w-5 h-5 text-white group-hover:text-[#111525] transform group-hover:rotate-90 transition-all" />
                         <span className="font-semibold text-white group-hover:text-[#111525]">Create Task</span>
                     </div>
                     <ChevronRight className="w-5 h-5 text-white group-hover:text-[#111525] transform group-hover:translate-x-1 transition-transform" />
-                </div>
+                </button>
             </div>
         </button>
     );

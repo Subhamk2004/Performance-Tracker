@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Logo from '../assets/Logo.png'
 import ProfileCardNav from './ProfileCardNav'
-import { CalendarCheck2, CalendarPlus, CopyPlusIcon, Focus, HistoryIcon, Info, LayoutDashboard, LayoutGrid, LayoutGridIcon, LogOutIcon, LucideArrowRightFromLine, LucideLogIn, LucideNotebookPen, LucideTimer, LucideUsers, NotebookPenIcon, Phone, StickyNote, TouchpadOffIcon, UserPlus2 } from 'lucide-react'
+import { CalendarCheck2, CalendarPlus, CopyPlusIcon, Focus, HistoryIcon, Info, LayoutDashboard, LayoutGrid, LayoutGridIcon, ListTodoIcon, LogOutIcon, LucideArrowRightFromLine, LucideLogIn, LucideNotebookPen, LucideTimer, LucideUsers, NotebookPenIcon, Phone, StickyNote, TouchpadOffIcon, UserPlus2 } from 'lucide-react'
 
 function Navbar() {
 
@@ -35,20 +35,12 @@ function Navbar() {
             Add Task
           </NavLink>
           <NavLink
-            to="/history"
+            to="/alltask"
             className={({ isActive }) =>
               isActive ? activeLink : inactiveLink
             }>
-            <CalendarCheck2 size='26' />
-            History
-          </NavLink>
-          <NavLink
-            to="/pending"
-            className={({ isActive }) =>
-              isActive ? activeLink : inactiveLink
-            }>
-            <HistoryIcon size='26' />
-            Pending Task
+            <ListTodoIcon size='26' />
+            All Tasks
           </NavLink>
           <NavLink
             to="/zenspace"

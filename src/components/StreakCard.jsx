@@ -9,7 +9,7 @@ const StreakCard = ({ stats = {
     totalTasks: 156
 } }) => {
     return (
-        <div className="bg-[#111525] rounded-3xl p-6 h-[360px] w-[360px] shadow-lg shadow-black transition-all bg-gradient-to-tl from-secondary via-secondary to-secondary border-gray-600">
+        <div className="bg-[#111525] rounded-3xl p-6 h-[350px] w-[350px] shadow-lg shadow-black transition-all bg-gradient-to-tl from-secondary via-secondary to-secondary border-gray-600">
             <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
