@@ -8,7 +8,7 @@ function Navbar() {
 
   let activeLink = 'flex flex-row items-center gap-4 text-white text-[20px] px-6 p-3 font-semibold cursor-pointer bg-secondary hover:text-white rounded-2xl transition-all'
 
-  let inactiveLink = 'flex flex-row items-center gap-4 text-darkGray text-[20px] px-6 p-3 cursor-pointer bg-primary hover:text-white hover:bg-secondary hover:rounded-2xl transition-all'
+  let inactiveLink = 'flex flex-row items-center gap-4 text-darkGray text-[20px] px-6 p-3 cursor-pointer hover:text-white hover:bg-secondary hover:rounded-2xl transition-all'
 
 
   return (

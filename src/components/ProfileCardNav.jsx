@@ -8,7 +8,7 @@ function ProfileCardNav({
     image
 }) {
     return (
-        <div className='w-full flex flex-row border-2 p-2 border-secondary rounded-2xl items-center justify-between bg-secondary filter shadow-3xl shadow-[#000000] mb-1'>
+        <div className='w-full flex flex-row border-2 p-2 border-secondary rounded-2xl items-center justify-between bg-secondary shadow-lg shadow-[#000000] mb-4'>
             <div className='flex flex-row items-center gap-3'>
                 <div className='w-[50px] h-[50px] rounded-full overflow-hidden shadow-lg shadow-black'>
                     <img src={batman} className='object-cover

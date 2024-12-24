@@ -6,7 +6,8 @@ body{
   font-family:Urbanist;
   font-weight: 500;
   font-size: 18px;
-  background-color: #050508;
+  background-color:#050508;
+  background:linear-gradient(135deg, #050508 35%, #111525);
   height: 100vh;
 }
 #root{
