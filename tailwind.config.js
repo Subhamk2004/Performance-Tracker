@@ -11,7 +11,7 @@ export default {
         darkGray: '#D6D6D6',
         primary: '#050508',
         secondary: '#111525',
-        btnclr:'#4151d8',
+        btnclr:'#698eff',
         textp: '#494949',
         alertclr:'#df5252',
         purple:'#4d176a',

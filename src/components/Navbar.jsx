@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import Logo from '../assets/Logo.png'
 import ProfileCardNav from './ProfileCardNav'
-import { CalendarCheck2, CalendarPlus, CopyPlusIcon, Focus, HistoryIcon, Info, LayoutDashboard, LayoutGrid, LayoutGridIcon, ListTodoIcon, LogOutIcon, LucideArrowRightFromLine, LucideLogIn, LucideNotebookPen, LucideTimer, LucideUsers, NotebookPenIcon, Phone, StickyNote, TouchpadOffIcon, UserPlus2 } from 'lucide-react'
+import { CalendarCheck2, CalendarPlus, CopyPlusIcon, Focus, HistoryIcon, Info, LayoutDashboard, LayoutGrid, LayoutGridIcon, ListTodoIcon, LogOutIcon, LucideArrowRightFromLine, LucideChartColumnIncreasing, LucideLogIn, LucideNotebookPen, LucideTimer, LucideUsers, NotebookPenIcon, Phone, StickyNote, TouchpadOffIcon, UserPlus2 } from 'lucide-react'
 
 function Navbar() {
 
@@ -33,6 +33,14 @@ function Navbar() {
             }>
             <CopyPlusIcon size='26' />
             Add Task
+          </NavLink>
+          <NavLink
+            to="/dailyactivity"
+            className={({ isActive }) =>
+              isActive ? activeLink : inactiveLink
+            }>
+            <LucideChartColumnIncreasing size='26' />
+            Daily Activity
           </NavLink>
           <NavLink
             to="/alltask"

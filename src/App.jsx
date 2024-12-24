@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
 import AboutUs from "./pages/About"
 import ContactUs from "./pages/Contact"
+import AddTask from "./pages/AddTask"
 
 function App() {
   let router = createBrowserRouter([
@@ -37,6 +38,10 @@ function App() {
         {
           path: 'contact',
           element: <ContactUs />
+        },
+        {
+          path: 'addtask',
+          element: <AddTask />
         }
       ]
     }
