@@ -11,7 +11,8 @@ function FormInput({
     onChange,
     inputClassName,
     labelClassName,
-    isReadOnly
+    isReadOnly,
+    alertText = ''
 }) {
     return (
         <div className='flex flex-col w-full gap-1'>
@@ -30,18 +31,24 @@ function FormInput({
                         <option value='Programming'>Programming</option>
                         <option value='Research'>Research</option>
                         <option value='Office'>Office</option>
-                        
+
                     </select> :
-                    <input
-                        placeholder={placeholder}
-                        id={labelFor}
-                        type={type}
-                        onChange={onChange}
-                        value={value}
-                        required={isRequired}
-                        readOnly={isReadOnly}
-                        className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white`}
-                    />
+                    <>
+                        <input
+                            placeholder={placeholder}
+                            id={labelFor}
+                            type={type}
+                            onChange={onChange}
+                            value={value}
+                            required={isRequired}
+                            readOnly={isReadOnly}
+                            className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white`}
+                        />
+                        {
+                            alertText.length > 0 &&
+                            <p className='text-sm text-alertclr'>*{alertText}</p>
+                        }
+                    </>
             }
 
         </div>

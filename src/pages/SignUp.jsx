@@ -16,7 +16,8 @@ function Signup() {
         password: '',
         githubusername: '',
         image: null,
-        primarywork: ''
+        primarywork: '',
+        pat: ''
     }
 
     const [user, setUser] = useState(initialUserState);
@@ -70,7 +71,7 @@ function Signup() {
                 </span>
             </p>
             <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px] overflow-scroll no-scrollbar'
-            onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
             >
 
                 <FormInput
@@ -128,7 +129,7 @@ function Signup() {
                 <FormInput
                     title='Github Username'
                     labelFor='githubusername'
-                    placeholder='Will be used to sync your repositories'
+                    placeholder='Github Username'
                     type='text'
                     isRequired={false}
                     inputClassName='bg-primary/50 text-black'
@@ -138,6 +139,23 @@ function Signup() {
                     }}
                     value={user.githubusername}
                 />
+                {
+                    user.githubusername &&
+                    <FormInput
+                        title='Github Personal Access Token'
+                        labelFor='pat'
+                        placeholder='Github PAT'
+                        type='text'
+                        isRequired={false}
+                        inputClassName='bg-primary/50 text-black'
+                        labelClassName='ml-1'
+                        onChange={(prev) => {
+                            setUser({ ...prev, pat: prev.target.value })
+                        }}
+                        value={user.pat}
+                        alertText="This is required to fetch your private repositories. Rest assured, your token will be encrypted and never disclosed"
+                    />
+                }
                 <FormInput
                     title='Primary Work'
                     labelFor='primarywork'

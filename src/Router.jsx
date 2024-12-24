@@ -8,7 +8,7 @@ import GuestNavbar from "./components/GuestNavbar";
 function Router() {
     let isAuthenticated = true;
     return (
-        <div className="w-full h-full flex flex-row gap-6 px-4 py-10 text-white">
+        <div className="w-full h-full flex flex-row gap-14 px-4 py-10 text-white">
             {
                 !isAuthenticated ?
                     <GuestNavbar /> :
