@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChevronDown, User } from 'lucide-react'
+import batman from '../assets/batman.jpg'
 
 function ProfileCardNav({
     name = "Subham",
@@ -7,10 +8,11 @@ function ProfileCardNav({
     image
 }) {
     return (
-        <div className='w-full flex flex-row border-2 p-2 border-white rounded-2xl items-center justify-between'>
+        <div className='w-full flex flex-row border-2 p-2 border-secondary rounded-2xl items-center justify-between bg-secondary filter shadow-3xl shadow-[#000000] mb-1'>
             <div className='flex flex-row items-center gap-3'>
-                <div>
-                    <User size='40' className='rounded-full' />
+                <div className='w-[50px] h-[50px] rounded-full overflow-hidden shadow-lg shadow-black'>
+                    <img src={batman} className='object-cover
+                     w-full h-full rounded-full shadow-2xl shadow-black'/>
                 </div>
                 <div className='flex flex-col text-base'>
                     <p>{name}</p>

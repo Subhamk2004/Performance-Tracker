@@ -5,6 +5,8 @@ import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
+import AboutUs from "./pages/About"
+import ContactUs from "./pages/Contact"
 
 function App() {
   let router = createBrowserRouter([
@@ -27,6 +29,14 @@ function App() {
         {
           path: 'dashboard',
           element: <Dashboard />
+        },
+        {
+          path: 'about',
+          element: <AboutUs />
+        },
+        {
+          path: 'contact',
+          element: <ContactUs />
         }
       ]
     }

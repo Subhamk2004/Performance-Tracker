@@ -1,16 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import FormInput from '../components/FormInput';
 
 function Login() {
-    let isAuthenticated = false;
+    let isAuthenticated = true;
     let navigate = useNavigate();
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/dashboard');
         }
     }, []);
+
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    console.log(email, password);
+    
+    let handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(email, password);
+    }
 
     return (
         <div className='w-full h-full flex flex-col items-center justify-center mt-4 overflow-scroll no-scrollbar'>
@@ -30,7 +39,9 @@ function Login() {
                 <span className='text-lime'>{' }'}
                 </span>
             </p>
-            <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px]'>
+            <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px]'
+            onSubmit={handleSubmit}
+            >
                 <FormInput
                     title='Email'
                     labelFor='email'
@@ -39,6 +50,8 @@ function Login() {
                     isRequired={true}
                     inputClassName='bg-primary/50'
                     labelClassName='ml-1'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <FormInput
                     title='Password'
@@ -48,6 +61,8 @@ function Login() {
                     isRequired={true}
                     inputClassName='bg-primary/50'
                     labelClassName='ml-1'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <button className='w-full bg-lime/80 text-black hover:bg-lime font-semibold px-4 py-2 rounded-lg'>

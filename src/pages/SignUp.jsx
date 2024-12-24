@@ -1,16 +1,43 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import FormInput from '../components/FormInput';
+import FormImageInput from '../components/FormImageInput';
 
 function Signup() {
-    let isAuthenticated = false;
+    let isAuthenticated = true;
     let navigate = useNavigate();
+    const [previewImage, setPreviewImage] = useState(null);
+
+    let initialUserState = {
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+        githubusername: '',
+        image: null,
+        primarywork: ''
+    }
+
+    const [user, setUser] = useState(initialUserState);
+    console.log(user);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setUser(prevUser => ({ ...prevUser, image: file }));
+        setPreviewImage(URL.createObjectURL(file));
+    };
+
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/dashboard');
         }
     }, []);
+
 
     return (
         <div className='w-full h-full flex flex-col items-center justify-center mt-4 overflow-scroll no-scrollbar'>
@@ -42,15 +69,48 @@ function Signup() {
                 <span className='text-lime'>{' }'}
                 </span>
             </p>
-            <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px]'>
+            <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px] overflow-scroll no-scrollbar'
+            onSubmit={handleSubmit}
+            >
+
+                <FormInput
+                    title='Name'
+                    labelFor='name'
+                    placeholder='Enter your name'
+                    type='text'
+                    isRequired={true}
+                    inputClassName='bg-primary/50 text-black'
+                    labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, name: prev.target.value })
+                    }}
+                    value={user.name}
+                />
+                <FormInput
+                    title='Username'
+                    labelFor='username'
+                    placeholder='Choose a username'
+                    type='text'
+                    isRequired={true}
+                    inputClassName='bg-primary/50 text-black'
+                    labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, username: prev.target.value })
+                    }}
+                    value={user.username}
+                />
                 <FormInput
                     title='Email'
                     labelFor='email'
                     placeholder='Enter your email'
                     type='email'
                     isRequired={true}
-                    inputClassName='bg-primary/50'
+                    inputClassName='bg-primary/50 text-black'
                     labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, email: prev.target.value })
+                    }}
+                    value={user.email}
                 />
                 <FormInput
                     title='Password'
@@ -58,12 +118,50 @@ function Signup() {
                     placeholder='Enter your password'
                     type='password'
                     isRequired={true}
-                    inputClassName='bg-primary/50'
+                    inputClassName='bg-primary/50 text-black'
                     labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, password: prev.target.value })
+                    }}
+                    value={user.password}
+                />
+                <FormInput
+                    title='Github Username'
+                    labelFor='githubusername'
+                    placeholder='Will be used to sync your repositories'
+                    type='text'
+                    isRequired={false}
+                    inputClassName='bg-primary/50 text-black'
+                    labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, githubusername: prev.target.value })
+                    }}
+                    value={user.githubusername}
+                />
+                <FormInput
+                    title='Primary Work'
+                    labelFor='primarywork'
+                    placeholder='primary work'
+                    type='text'
+                    isSelect={true}
+                    isRequired={false}
+                    inputClassName='bg-primary/50 text-black'
+                    labelClassName='ml-1'
+                    onChange={(prev) => {
+                        setUser({ ...prev, primarywork: prev.target.value })
+                    }}
+                    value={user.primarywork}
                 />
 
+                <FormImageInput
+                    title='User Profile Avatar'
+                    labelFor='profilePic'
+                    isRequired={false}
+                    onChange={handleImageChange}
+                    previewImage={previewImage}
+                />
                 <button className='w-full bg-lime/80 text-black hover:bg-lime font-semibold px-4 py-2 rounded-lg'>
-                    Login
+                    Signup
                 </button>
 
             </form>

@@ -5,7 +5,7 @@ import { BarChartBig, Book, Code2, Github, TimerIcon, Users } from 'lucide-react
 
 
 function Landing() {
-    let isAuthenticated = false;
+    let isAuthenticated = true;
     let navigate = useNavigate();
     useEffect(() => {
         if (isAuthenticated) {

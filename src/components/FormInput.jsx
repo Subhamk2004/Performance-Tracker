@@ -26,12 +26,11 @@ function FormInput({
                         onChange={onChange}
                         className='w-full h-10 border-[1px] border-primary rounded-lg p-2 text-primary text-lg outline-none focus:bg-[#e7ebff]'
                     >
-                        <option value='General Physician'>General Physician</option>
-                        <option value='Gynecologist'>Gynecologist</option>
-                        <option value='Dermatologist'>Dermatologist</option>
-                        <option value='Pediatricians'>Pediatricians</option>
-                        <option value='Neurologist'>Neurologist</option>
-                        <option value='Gastroenterologist'>Gastroenterologist</option>
+                        <option value='Academics'>Academics</option>
+                        <option value='Programming'>Programming</option>
+                        <option value='Research'>Research</option>
+                        <option value='Office'>Office</option>
+                        
                     </select> :
                     <input
                         placeholder={placeholder}
@@ -41,7 +40,7 @@ function FormInput({
                         value={value}
                         required={isRequired}
                         readOnly={isReadOnly}
-                        className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-[#e7ebff] ${inputClassName}`}
+                        className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white`}
                     />
             }
 
