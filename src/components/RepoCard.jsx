@@ -17,6 +17,7 @@ const RepoCard = ({ repo }) => {
         { name: 'Issues', value: repo.open_issues_count },
         { name: 'Watchers', value: repo.watchers_count }
     ];
+    let sum = repo.stargazers_count + repo.forks_count + repo.open_issues_count + repo.watchers_count;
 
     return (
         <div className="bg-[#111525] rounded-3xl p-6 shadow-lg shadow-black transition-all bg-gradient-to-tl from-secondary via-secondary to-secondary border-gray-600 w-[350px]">
@@ -44,34 +45,37 @@ const RepoCard = ({ repo }) => {
             </p>
 
             {/* Stats Graph */}
-            <div className="h-32 mb-4">
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={statsData} margin={{ top: 0, right: 0, left: -7, bottom: 0 }}>
-                        <XAxis
-                            dataKey="name"
-                            tick={{ fill: '#9ca3af', fontSize: 12 }}
-                        />
-                        <YAxis
-                            tick={{ fill: '#9ca3af', fontSize: 12 }}
-                            width={30}
-                        />
-                        <Tooltip
-                            contentStyle={{
-                                backgroundColor: '#050508',
-                                border: 'none',
-                                borderRadius: '8px',
-                                color: '#9ca3af'
-                            }}
-                        />
-                        <Bar
-                            dataKey="value"
-                            fill="#4151d8"
-                            radius={[12, 12, 0, 0]}
-                            background={{ fill: '#111525' }}
-                        />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+            {
+                sum > 0 &&
+                <div className="h-32 mb-4">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={statsData} margin={{ top: 0, right: 0, left: -7, bottom: 0 }}>
+                            <XAxis
+                                dataKey="name"
+                                tick={{ fill: '#9ca3af', fontSize: 12 }}
+                            />
+                            <YAxis
+                                tick={{ fill: '#9ca3af', fontSize: 12 }}
+                                width={30}
+                            />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: '#050508',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    color: '#9ca3af'
+                                }}
+                            />
+                            <Bar
+                                dataKey="value"
+                                fill="#4151d8"
+                                radius={[12, 12, 0, 0]}
+                                background={{ fill: '#111525' }}
+                            />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            }
 
             <div className="flex items-center text-sm text-gray-300 mb-4">
                 <Code size={16} className="mr-1" />

@@ -20,6 +20,9 @@ const AddTask = () => {
     });
 
     let priorityOptions = ['low', 'medium', 'high'];
+    const maxDateObj = new Date();
+    maxDateObj.setDate(maxDateObj.getDate() + 30);
+    const maxDate = maxDateObj.toISOString().split("T")[0];
 
     const handleSubmitTask = (e) => {
         e.preventDefault();
@@ -118,7 +121,9 @@ const AddTask = () => {
                             <FormInput
                                 title="Due Date"
                                 labelFor="toBeDoneBy"
-                                type="datetime-local"
+                                type="date"
+                                min={new Date().toISOString().split('T')[0]}
+                                max={maxDate}
                                 isRequired={true}
                                 inputClassName='bg-primary/50 text-black'
                                 labelClassName='ml-1'

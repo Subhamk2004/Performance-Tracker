@@ -5,7 +5,7 @@ import FormInput from '../components/FormInput';
 import FormImageInput from '../components/FormImageInput';
 
 function Signup() {
-    let isAuthenticated = false;
+    let isAuthenticated = true;
     let navigate = useNavigate();
     const [previewImage, setPreviewImage] = useState(null);
 

@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RepoCard from '../components/RepoCard'
 import batman from '../assets/batman.jpg'
 import { FileStackIcon, Github, HistoryIcon, SearchIcon, SquareStackIcon } from 'lucide-react'
 import ActiveTaskCard from '../components/ActiveTaskCard'
 import StreakCard from '../components/StreakCard'
 import DashboardBtn from '../components/DashboardBtn'
+import getGithubRepos from '../hooks/getGithubRepos'
 
 function Dashboard() {
 
+  let { repos } = getGithubRepos();
   let [tasks, setTasks] = useState([
     {
       title: 'Complete the frontend of the project',
@@ -46,48 +48,6 @@ function Dashboard() {
       priority: 'high'
     }
   ])
-  let [repos, setRepos] = useState([
-    {
-      name: 'Performance Tracking',
-      visibility: 'private',
-      description: 'This is a performance tracking project',
-      owner: {
-        login: 'Subham',
-        avatar_url: batman,
-        html_url: 'https://github.com/Subhamk2004'
-      },
-      html_url: 'https://github.com/Subhamk2004/Performance-Tracker',
-      language: 'Javascript',
-      stargazers_count: 10,
-      forks_count: 4,
-      open_issues_count: 7,
-      updated_at: "2024-06-17T12:36:04Z",
-      default_branch: 'master',
-      size: 435,
-      watchers_count: 23,
-      id: 836710400,
-    },
-    {
-      name: 'DocCures-frontend',
-      visibility: 'public',
-      description: 'This is a frontend project',
-      owner: {
-        login: 'Subham',
-        avatar_url: batman,
-        html_url: ''
-      },
-      html_url: '',
-      language: 'Python',
-      stargazers_count: 10,
-      forks_count: 4,
-      open_issues_count: 7,
-      updated_at: "2024-06-17T12:36:04Z",
-      default_branch: 'master',
-      size: 435,
-      watchers_count: 23,
-      id: 836710401,
-    }
-  ])
 
   return (
     <div className='w-full h-full flex flex-row justify-start mt-4 flex-wrap overflow-scroll no-scrollbar gap-6 lg:gap-4'>
@@ -120,7 +80,7 @@ function Dashboard() {
         </h2>
         <div className='flex flex-row flex-wrap gap-8'>
           {
-            repos.map((repo) => {
+            repos?.map((repo) => {
               return (
                 <RepoCard repo={repo} key={repo.id} />
               )

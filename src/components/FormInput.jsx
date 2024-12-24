@@ -13,7 +13,9 @@ function FormInput({
     labelClassName,
     isReadOnly,
     alertText = '',
-    selectOptions = []
+    selectOptions = [],
+    min,
+    max
 }) {
     return (
         <div className='flex flex-col w-full gap-1'>
@@ -44,6 +46,8 @@ function FormInput({
                             type={type}
                             onChange={onChange}
                             value={value}
+                            min={min}
+                            max={max}
                             required={isRequired}
                             readOnly={isReadOnly}
                             className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white`}

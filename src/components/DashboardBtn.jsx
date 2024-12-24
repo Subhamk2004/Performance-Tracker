@@ -7,7 +7,7 @@ const AddTaskButton = () => {
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     return (
-        <button
+        <div
 
             className="w-[350px] h-[350px] group relative bg-[#111525] hover:bg-gradient-to-tl from-secondary via-secondary to-secondary rounded-3xl p-6 shadow-lg transition-all duration-300  overflow-hidden"
         >
@@ -66,7 +66,7 @@ const AddTaskButton = () => {
                     <ChevronRight className="w-5 h-5 text-white group-hover:text-[#111525] transform group-hover:translate-x-1 transition-transform" />
                 </button>
             </div>
-        </button>
+        </div>
     );
 };
 
