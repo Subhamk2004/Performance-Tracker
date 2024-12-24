@@ -19,6 +19,8 @@ const AddTask = () => {
         description: '',
     });
 
+    let priorityOptions = ['low', 'medium', 'high'];
+
     const handleSubmitTask = (e) => {
         e.preventDefault();
         console.log('Task Data:', taskData);
@@ -87,6 +89,8 @@ const AddTask = () => {
                             placeholder="Enter task title"
                             type="text"
                             isRequired={true}
+                            inputClassName='bg-primary/50 text-black'
+                            labelClassName='ml-1'
                             value={taskData.title}
                             onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
                         />
@@ -95,6 +99,8 @@ const AddTask = () => {
                             labelFor="description"
                             placeholder="Enter task description"
                             type="text"
+                            inputClassName='bg-primary/50 text-black'
+                            labelClassName='ml-1'
                             value={taskData.description}
                             onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
                         />
@@ -103,6 +109,9 @@ const AddTask = () => {
                                 title="Priority"
                                 labelFor="priority"
                                 isSelect={true}
+                                selectOptions={priorityOptions}
+                                inputClassName='bg-primary/50 text-black'
+                                labelClassName='ml-1'
                                 value={taskData.priority}
                                 onChange={(e) => setTaskData({ ...taskData, priority: e.target.value })}
                             />
@@ -111,6 +120,8 @@ const AddTask = () => {
                                 labelFor="toBeDoneBy"
                                 type="datetime-local"
                                 isRequired={true}
+                                inputClassName='bg-primary/50 text-black'
+                                labelClassName='ml-1'
                                 value={taskData.toBeDoneBy}
                                 onChange={(e) => setTaskData({ ...taskData, toBeDoneBy: e.target.value })}
                             />
@@ -146,6 +157,8 @@ const AddTask = () => {
                             type="text"
                             isRequired={true}
                             value={dailyData.title}
+                            inputClassName='bg-primary/50 text-black'
+                            labelClassName='ml-1'
                             onChange={(e) => setDailyData({ ...dailyData, title: e.target.value })}
                         />
                         <FormInput
@@ -153,6 +166,8 @@ const AddTask = () => {
                             labelFor="dailyDescription"
                             placeholder="Enter activity description"
                             type="text"
+                            inputClassName='bg-primary/50 text-black'
+                            labelClassName='ml-1'
                             value={dailyData.description}
                             onChange={(e) => setDailyData({ ...dailyData, description: e.target.value })}
                         />

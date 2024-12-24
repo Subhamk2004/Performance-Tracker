@@ -5,7 +5,7 @@ import FormInput from '../components/FormInput';
 import FormImageInput from '../components/FormImageInput';
 
 function Signup() {
-    let isAuthenticated = true;
+    let isAuthenticated = false;
     let navigate = useNavigate();
     const [previewImage, setPreviewImage] = useState(null);
 
@@ -26,6 +26,8 @@ function Signup() {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+    let primaryWorkOptions = ['Academics', 'Programming', 'Research', 'Office'];
+    let a;
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -162,6 +164,7 @@ function Signup() {
                     placeholder='primary work'
                     type='text'
                     isSelect={true}
+                    selectOptions={primaryWorkOptions}
                     isRequired={false}
                     inputClassName='bg-primary/50 text-black'
                     labelClassName='ml-1'

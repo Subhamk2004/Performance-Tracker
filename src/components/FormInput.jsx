@@ -12,7 +12,8 @@ function FormInput({
     inputClassName,
     labelClassName,
     isReadOnly,
-    alertText = ''
+    alertText = '',
+    selectOptions = []
 }) {
     return (
         <div className='flex flex-col w-full gap-1'>
@@ -27,10 +28,13 @@ function FormInput({
                         onChange={onChange}
                         className='w-full h-10 border-[1px] border-primary rounded-lg p-2 text-primary text-lg outline-none focus:bg-[#e7ebff]'
                     >
-                        <option value='Academics'>Academics</option>
-                        <option value='Programming'>Programming</option>
-                        <option value='Research'>Research</option>
-                        <option value='Office'>Office</option>
+                        {
+                            selectOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                    {option}
+                                </option>
+                            ))
+                        }
 
                     </select> :
                     <>
