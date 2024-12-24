@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RepoCard from '../components/RepoCard'
 import batman from '../assets/batman.jpg'
 import { FileStackIcon, Github, HistoryIcon, SearchIcon, SquareStackIcon } from 'lucide-react'
-import PendingTaskCard from '../components/ActiveTaskCard'
+import ActiveTaskCard from '../components/ActiveTaskCard'
 import StreakCard from '../components/StreakCard'
 import DashboardBtn from '../components/DashboardBtn'
 
@@ -137,7 +137,7 @@ function Dashboard() {
         {
           tasks.map((task) => {
             return (
-              <PendingTaskCard task={task} key={task.id} isDashboard={true} />
+              <ActiveTaskCard task={task} key={task.id} isDashboard={true} />
             )
           })
         }

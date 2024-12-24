@@ -30,7 +30,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
 
     return (
         <Link className="bg-primary rounded-3xl p-6 transition-all"
-        to='/pending'
+        to='/alltask/pending'
         >
             <div className="flex items-center justify-between mb-4 gap-2">
                 <div className="flex items-center gap-4">
