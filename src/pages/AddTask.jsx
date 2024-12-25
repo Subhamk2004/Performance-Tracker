@@ -1,34 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormInput from '../components/FormInput';
 import { Plus, Calendar, Clock, AlertCircle } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const AddTask = () => {
+    let { username } = useSelector(state => state.user);
     const [showNormalForm, setShowNormalForm] = useState(false);
     const [showDailyForm, setShowDailyForm] = useState(false);
-
     const [taskData, setTaskData] = useState({
         title: '',
         description: '',
-        status: 'pending',
         priority: 'low',
-        toBeDoneBy: ''
+        dueDate: '',
+        username: username,
     });
+
+    useEffect(() => {
+        setTaskData({ ...taskData, username: username });
+    }, [username]);
 
     const [dailyData, setDailyData] = useState({
         title: '',
         description: '',
     });
-
     let priorityOptions = ['low', 'medium', 'high'];
     const maxDateObj = new Date();
     maxDateObj.setDate(maxDateObj.getDate() + 30);
     const maxDate = maxDateObj.toISOString().split("T")[0];
+    let server_url = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
-    const handleSubmitTask = (e) => {
+    const handleSubmitTask = async (e) => {
         e.preventDefault();
         console.log('Task Data:', taskData);
         setShowNormalForm(false);
-        setTaskData({ title: '', description: '', status: 'pending', priority: 'low', toBeDoneBy: '' });
+
+        try {
+            const response = await fetch(`${server_url}/api/create-task`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData),
+                credentials: 'include',
+            });
+
+            let data = await response.json();
+            console.log('Response:', data);
+
+            if (response.ok) {
+                console.log('Task created successfully');
+            } else {
+                console.log('Failed to create task');
+            }
+        }
+        catch (error) {
+            console.log('Error:', error);
+        }
     };
 
     const handleSubmitDaily = (e) => {
@@ -120,15 +147,15 @@ const AddTask = () => {
                             />
                             <FormInput
                                 title="Due Date"
-                                labelFor="toBeDoneBy"
+                                labelFor="dueDate"
                                 type="date"
                                 min={new Date().toISOString().split('T')[0]}
                                 max={maxDate}
                                 isRequired={true}
                                 inputClassName='bg-primary/50 text-black'
                                 labelClassName='ml-1'
-                                value={taskData.toBeDoneBy}
-                                onChange={(e) => setTaskData({ ...taskData, toBeDoneBy: e.target.value })}
+                                value={taskData.dueDate}
+                                onChange={(e) => setTaskData({ ...taskData, dueDate: e.target.value })}
                             />
                         </div>
                         <div className="flex justify-end gap-4 mt-6">
