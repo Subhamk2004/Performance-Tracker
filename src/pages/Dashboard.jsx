@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import RepoCard from '../components/RepoCard'
 import batman from '../assets/batman.jpg'
-import { FileStackIcon, Github, HistoryIcon, SearchIcon, SquareStackIcon } from 'lucide-react'
+import { FileStackIcon, Github, HistoryIcon, LucideClipboardPenLine, SearchIcon, SquareStackIcon } from 'lucide-react'
 import ActiveTaskCard from '../components/ActiveTaskCard'
 import StreakCard from '../components/StreakCard'
 import DashboardBtn from '../components/DashboardBtn'
 import getGithubRepos from '../hooks/getGithubRepos'
+import { set } from 'zod'
 
 function Dashboard() {
 
@@ -48,6 +49,50 @@ function Dashboard() {
       priority: 'high'
     }
   ])
+  let [activeRepoBtn, setActiveRepoBtn] = useState(false);
+  let [activeTaskBtn, setActiveTaskBtn] = useState(false);
+  let [search, setSearch] = useState('');
+  let [repoBtnClassname, setRepoBtnClassname] = useState('p-1 hover:bg-primary rounded-lg relative group');
+  let [taskBtnClassname, setTaskBtnClassname] = useState('p-1 hover:bg-primary rounded-lg relative group');
+  let [loading, setLoading] = useState(false);
+
+  let searchRepo = async (e) => {
+    e.preventDefault();
+    if (search) {
+      try {
+        setLoading(true);
+        if (activeRepoBtn) {
+          console.log('Searching for repos');
+          let response = await fetch(`http://localhost:3000/api/github-repos?search=${search}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        }
+        else if (activeTaskBtn) {
+          console.log('Searching for tasks');
+        }
+      } catch (error) {
+        console.log(error);
+
+      } finally {
+        setLoading(false);
+      }
+    }
+  }
+  let activateRepoBtn = () => {
+    setActiveRepoBtn(true);
+    setRepoBtnClassname('p-1 hover:bg-primary rounded-lg relative group bg-primary');
+    setTaskBtnClassname('p-1 hover:bg-primary rounded-lg relative group');
+    setActiveTaskBtn(false);
+  }
+  let activateTaskBtn = () => {
+    setActiveTaskBtn(true);
+    setTaskBtnClassname('p-1 hover:bg-primary rounded-lg relative group bg-primary');
+    setRepoBtnClassname('p-1 hover:bg-primary rounded-lg relative group');
+    setActiveRepoBtn(false);
+  }
 
   return (
     <div className='w-full h-full flex flex-row justify-start mt-4 flex-wrap overflow-scroll no-scrollbar gap-6 lg:gap-4'>
@@ -61,14 +106,36 @@ function Dashboard() {
               Quickly access your tasks and recent GitHub activity
             </h3>
           </div>
-          <div className='flex flex-row gap-2 items-center bg-secondary px-4 rounded-3xl hover:border-btnclr border-2 border-transparent h-16 lg:w-[350px]'>
-            <SearchIcon size='24' className='text-white' />
+          <form className='flex flex-row gap-2 items-center bg-secondary px-4 rounded-3xl hover:border-btnclr border-2 border-transparent h-16 lg:w-[350px]'
+            onSubmit={searchRepo}
+          >
+            <button disabled={loading}>
+              <SearchIcon size='24' className='text-white' />
+            </button>
             <input
               type='text'
-              placeholder='Search tasks'
+              value={search}
+              readOnly={loading}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder='Search tasks, repos....'
               className='bg-secondary text-white px-4 py-2 rounded-lg outline-none'
             />
-          </div>
+            <button className={`${repoBtnClassname}`}
+              onClick={activateRepoBtn} disabled={loading}
+            >
+              <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 bg-black text-white p-1 rounded'>
+                Search GitHub repos
+              </p>
+              <Github size='24' className='text-white' />
+            </button>
+
+            <button className={`${taskBtnClassname}`}
+              onClick={activateTaskBtn} disabled={loading}
+            >
+              <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 right-0 bg-black text-white p-1 rounded'>Search tasks</p>
+              <LucideClipboardPenLine size='24' className='text-white' />
+            </button>
+          </form>
         </div>
         <div className='my-8 flex flex-row items-center flex-wrap gap-8'>
           <StreakCard />
