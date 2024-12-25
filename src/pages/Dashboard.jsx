@@ -5,13 +5,16 @@ import { FileStackIcon, Github, HistoryIcon, LucideClipboardPenLine, SearchIcon,
 import ActiveTaskCard from '../components/ActiveTaskCard'
 import StreakCard from '../components/StreakCard'
 import DashboardBtn from '../components/DashboardBtn'
-import getGithubRepos from '../hooks/getGithubRepos'
+import getGithubRepos from '../hooks/useGithubRepos.mjs'
 import { set } from 'zod'
 import Search from '../components/Search'
+import IncomponentLoading from '../components/InComponentLoading'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Dashboard() {
 
-  let { repos } = getGithubRepos();
+  let { repos, loading } = getGithubRepos();
   let [tasks, setTasks] = useState([
     {
       title: 'Complete the frontend of the project',
@@ -50,7 +53,15 @@ function Dashboard() {
       priority: 'high'
     }
   ])
-  
+  let { isAuthenticated } = useSelector(state => state.user);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+    }
+  }, []);
+
 
   return (
     <div className='w-full h-full flex flex-row justify-start mt-4 flex-wrap overflow-scroll no-scrollbar gap-6 lg:gap-4'>
@@ -74,15 +85,20 @@ function Dashboard() {
           <Github size='24' className='text-white' />
           Recent GitHub Activity
         </h2>
-        <div className='flex flex-row flex-wrap gap-8'>
-          {
-            repos?.map((repo) => {
-              return (
-                <RepoCard repo={repo} key={repo.id} />
-              )
-            })
-          }
-        </div>
+        {
+          loading ?
+            <IncomponentLoading isShort={true} />
+            :
+            <div className='flex flex-row flex-wrap gap-8'>
+              {
+                repos?.map((repo) => {
+                  return (
+                    <RepoCard repo={repo} key={repo.id} />
+                  )
+                })
+              }
+            </div>
+        }
       </div>
       <div className='w-full lg:h-full overflow-scroll no-scrollbar lg:w-[420px] flex flex-col items-start justify-start gap-4 bg-gradient-to-tl from-secondary via-secondary to-secondary p-4 rounded-3xl
       shadow-md shadow-black transition-all mb-5'>

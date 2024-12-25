@@ -2,16 +2,16 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import FeatureCard from '../components/FeatureCard';
 import { BarChartBig, Book, Code2, Github, TimerIcon, Users } from 'lucide-react';
-
+import { useSelector } from 'react-redux';
 
 function Landing() {
-    let isAuthenticated = true;
+    let { isAuthenticated } = useSelector(state => state.user);
     let navigate = useNavigate();
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/dashboard');
         }
-    }, []);
+    }, [isAuthenticated]);
 
     return (
         <div className='w-full h-full flex flex-col items-center justify-start mt-4 overflow-scroll no-scrollbar'>

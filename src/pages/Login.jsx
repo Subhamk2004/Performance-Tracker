@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
-import { z } from 'zod';
+import { set, z } from 'zod';
 import FormInput from '../components/FormInput';
+import { useSelector } from 'react-redux';
 
 function Login() {
-    let isAuthenticated = true;
+    let { isAuthenticated } = useSelector(state => state.user);
     let navigate = useNavigate();
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [loading, setLoading] = useState(false);
+    let serverUrl = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
+
+    let handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            let response = await fetch(`${serverUrl}/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                credentials: 'include'
+            });
+            let data = await response.json();
+            console.log(data);
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/dashboard');
         }
-    }, []);
-
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-    console.log(email, password);
-    
-    let handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(email, password);
-    }
+    }, [isAuthenticated]);
 
     return (
         <div className='w-full h-full flex flex-col items-center justify-center mt-4 overflow-scroll no-scrollbar'>
@@ -28,19 +50,19 @@ function Login() {
             </h1>
             <p className='text-gray-400'>
                 Supercharge your productivity with
-                <span className='text-lime'>{' {'}
+                <span className='text-btnclr'>{' {'}
                 </span>
                 <span className='text-white'>{' Skills'}
                 </span>
-                <span className='text-lime text-3xl font-bold'>{'.'}
+                <span className='text-btnclr text-3xl font-bold'>{'.'}
                 </span>
                 <span className='text-white'>{'log'}
                 </span>
-                <span className='text-lime'>{' }'}
+                <span className='text-btnclr'>{' }'}
                 </span>
             </p>
             <form className='flex flex-col p-4 bg-secondary rounded-3xl mt-8 gap-5 w-[80%] max-w-[500px]'
-            onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
             >
                 <FormInput
                     title='Email'
@@ -65,7 +87,7 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button className='w-full bg-lime/80 text-black hover:bg-lime font-semibold px-4 py-2 rounded-lg'>
+                <button className='w-full bg-btnclr/80 text-black hover:bg-btnclr font-semibold px-4 py-2 rounded-lg'>
                     Login
                 </button>
 

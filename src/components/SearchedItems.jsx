@@ -1,6 +1,7 @@
 import { Circle, CrossIcon, Plus, ShieldCheck } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { set } from 'zod';
+import IncomponentLoading from './InComponentLoading';
 
 function SearchedItems({
     searchedItems: items,
@@ -26,9 +27,7 @@ function SearchedItems({
                         <div className="bg-[#111525] rounded-3xl p-6 transition-all bg-gradient-to-tl from-primary via-primary to-primary border-gray-600 w-[350px]">
                             {
                                 loading ?
-                                    <h3 className="text-lg font-bold text-white">
-                                        Loading...
-                                    </h3>
+                                    <IncomponentLoading isShort={true} />
                                     :
                                     <h3 className="text-lg font-bold text-white">
                                         No items found
@@ -76,9 +75,7 @@ function SearchedItems({
                                 </>
                                 :
                                 <div className="bg-[#111525] rounded-3xl p-6 transition-all bg-gradient-to-tl from-primary via-primary to-primary border-gray-600 w-[350px]">
-                                    <h3 className="text-lg font-bold text-white">
-                                        Loading ...
-                                    </h3>
+                                    <IncomponentLoading isShort={true} />
                                 </div>
                         }
                     </div>

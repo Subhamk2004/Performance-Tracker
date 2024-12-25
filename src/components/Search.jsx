@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SearchIcon, Github, LucideClipboardPenLine } from 'lucide-react'
 import SearchedItems from './SearchedItems';
-
+import { useSelector } from 'react-redux';
 
 function Search() {
 
@@ -12,6 +12,8 @@ function Search() {
     let [taskBtnClassname, setTaskBtnClassname] = useState('p-1 hover:bg-primary rounded-lg relative group');
     let [loading, setLoading] = useState(false);
     let [items, setItems] = useState([]);
+    let {githubusername} = useSelector(state => state.user);
+    const serverUrl = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
     let searchRepo = async (e) => {
         e.preventDefault();
@@ -20,11 +22,12 @@ function Search() {
                 setLoading(true);
                 if (activeRepoBtn) {
                     console.log('Searching for repos');
-                    let response = await fetch(`http://localhost:3000/api/github-repos?search=${search}`, {
+                    let response = await fetch(`${serverUrl}/api/github-repos?search=${search}&user=${githubusername}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
-                        }
+                        },
+                        credentials: 'include'
                     });
                     if (!response.ok) {
                         throw new Error("Failed to fetch repos");
