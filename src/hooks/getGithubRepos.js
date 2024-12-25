@@ -18,6 +18,8 @@ function getGithubRepos() {
                     throw new Error("Failed to fetch repos");
                 }
                 const data = await response.json();
+                console.log(data);
+                
                 setRepos(data);
             } catch (error) {
                 console.error("Error:", error);
