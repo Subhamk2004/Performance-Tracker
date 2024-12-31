@@ -13,6 +13,7 @@ import ActiveTask from "./pages/ActiveTasks"
 import CompletedTasks from "./pages/CompletedTasks"
 import PendingTasks from "./pages/PendingTasks"
 import DailyTasks from "./pages/DailyTasks"
+import ZenSpace from "./pages/ZenSpace"
 
 function App() {
   let router = createBrowserRouter([
@@ -67,6 +68,10 @@ function App() {
         {
           path: 'dailyactivity',
           element: <DailyTasks />
+        },
+        {
+          path: 'zenspace',
+          element: <ZenSpace />
         }
       ]
     }

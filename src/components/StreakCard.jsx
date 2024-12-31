@@ -1,19 +1,40 @@
-import React from 'react';
-import { Flame, Trophy, Target, Award, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Flame, Trophy, Target, Award } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import useStreak from '../hooks/useStreak.mjs';
 
-const StreakCard = ({ stats = {
-    currentStreak: 7,
-    longestStreak: 15,
-    totalDays: 45,
-    completionRate: 92,
-    totalTasks: 156
-} }) => {
+const StreakCard = () => {
+    const [stats, setStats] = useState({
+        currentStreak: 0,
+        longestStreak: 0,
+        completionRate: 0,
+        totalTasks: 0
+    });
+
+    const { streak, longestStreak, loading } = useStreak();
+    const { tasks } = useSelector(state => state.tasks);
+    const { tasks: dailyTasks } = useSelector(state => state.dailyTasks);
+
+    useEffect(() => {
+        const totalTasks = tasks.length + dailyTasks.length;
+        const pendingTasks = tasks.filter(task => task.status === 'pending');
+        const completedTasks = tasks.filter(task => task.status === 'completed');
+        const completionRate = completedTasks.length / (pendingTasks.length + completedTasks.length) * 100;
+
+        setStats({
+            currentStreak: streak,
+            longestStreak: longestStreak,
+            completionRate: isNaN(completionRate) ? 0 : completionRate.toFixed(1),
+            totalTasks
+        });
+    }, [streak, longestStreak, tasks, dailyTasks, loading]);
+
     return (
         <div className="bg-[#111525] rounded-3xl p-6 h-[350px] w-[350px] shadow-lg shadow-black transition-all bg-gradient-to-tl from-secondary via-secondary to-secondary border-gray-600">
             <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold text-white">Streak Stats <span className='text-sm text-white'>(monthly)</span></h3>
+                    <h3 className="text-xl font-bold text-white">Streak Stats</h3>
                     <Flame className="w-6 h-6 text-orange-500 animate-pulse" />
                 </div>
 

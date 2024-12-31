@@ -15,44 +15,8 @@ import { useNavigate } from 'react-router-dom'
 function Dashboard() {
 
   let { repos, loading } = getGithubRepos();
-  let [tasks, setTasks] = useState([
-    {
-      title: 'Complete the frontend of the project',
-      description: 'Complete the frontend of the project by 5th July',
-      status: 'pending',
-      id: 1,
-      created_at: '2024-06-17T12:36:04Z',
-      toBeDoneBy: '2024-06-17T12:36:04Z',
-      priority: 'high'
-    },
-    {
-      title: 'Complete the backend of the project',
-      description: 'Complete the backend of the project by 10th July',
-      status: 'pending',
-      id: 2,
-      created_at: '2024-06-17T12:36:04Z',
-      toBeDoneBy: '2024-06-17T12:36:04Z',
-      priority: 'low'
-    },
-    {
-      title: 'Complete the testing of the project',
-      description: 'Complete the testing of the project by 15th July',
-      status: 'pending',
-      id: 3,
-      created_at: '2024-06-17T12:36:04Z',
-      toBeDoneBy: '2024-06-17T12:36:04Z',
-      priority: 'medium'
-    },
-    {
-      title: 'Complete the documentation of the project',
-      description: 'Complete the documentation of the project by 20th July',
-      status: 'pending',
-      id: 4,
-      created_at: '2024-06-17T12:36:04Z',
-      toBeDoneBy: '2024-06-17T12:36:04Z',
-      priority: 'high'
-    }
-  ])
+  let { tasks } = useSelector(state => state.tasks)
+  let activeTasks = tasks.filter(task => task.status === 'active')
   let { isAuthenticated } = useSelector(state => state.user);
   let navigate = useNavigate();
 
@@ -107,7 +71,7 @@ function Dashboard() {
           Active Tasks
         </h2>
         {
-          tasks.map((task) => {
+          activeTasks?.map((task) => {
             return (
               <ActiveTaskCard task={task} key={task.id} isDashboard={true} />
             )
