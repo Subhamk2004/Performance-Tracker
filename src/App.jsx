@@ -9,6 +9,9 @@ import AboutUs from "./pages/About"
 import ContactUs from "./pages/Contact"
 import AddTask from "./pages/AddTask"
 import AllTasks from "./pages/AllTasks"
+import ActiveTask from "./pages/ActiveTasks"
+import CompletedTasks from "./pages/CompletedTasks"
+import PendingTasks from "./pages/PendingTasks"
 
 function App() {
   let router = createBrowserRouter([
@@ -47,6 +50,18 @@ function App() {
         {
           path: 'alltask',
           element: <AllTasks />
+        },
+        {
+          path: 'active',
+          element: <ActiveTask />
+        },
+        {
+          path: 'completed',
+          element: <CompletedTasks />
+        },
+        {
+          path: 'pending',
+          element: <PendingTasks />
         }
       ]
     }

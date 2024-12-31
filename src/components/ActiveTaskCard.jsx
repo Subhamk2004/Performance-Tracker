@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, CheckSquare, Square, AlertCircle, BookOpenTextIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const ActiveTaskCard = ({ task, isDashboard = false }) => {
     const [isChecked, setIsChecked] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
+    let [loading, setLoading] = useState(false);
+    let server_url = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -19,8 +20,25 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
         setShowUpdate(!showUpdate);
     };
 
-    const updateTask = () => {
+    const updateTask = async () => {
         console.log('Task updated:', task._id);
+        try {
+            setLoading(true);
+            let response = await fetch(`${server_url}/api/updateTask?${task._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ taskId: task._id })
+            });
+            let data = await response.json();
+            console.log('Task updated:', data);
+
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const getPriorityColor = (priority) => {
@@ -33,8 +51,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
     };
 
     return (
-        <Link className="bg-primary rounded-3xl p-6 transition-all w-full"
-            to='/alltask'
+        <div className="bg-primary rounded-3xl p-6 transition-all w-full"
         >
             <div className="flex items-center justify-between mb-4 gap-2">
                 <div className="flex items-center gap-4">
@@ -76,16 +93,17 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
             </div>
 
             {showUpdate && !isDashboard && (
-                <div className="mt-4 flex justify-end">
+                <div className="mt-4 flex justify-between">
+                    <p className='text-red-400 py-2 text-xs'>*This action cannot be undone</p>
                     <button
                         className="bg-[#698eff] text-[#111525] px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-80 transition-all"
                         onClick={updateTask}
                     >
-                        Update Status
+                        Mark Completed
                     </button>
                 </div>
             )}
-        </Link>
+        </div>
     );
 };
 

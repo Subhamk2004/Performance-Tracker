@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import ActiveTaskCard from '../components/ActiveTaskCard';
+import { Link, NavLink } from 'react-router-dom';
 import TaskNav from '../components/TaskNav';
 
-function AllTasks() {
+function CompletedTasks() {
     let { tasks } = useSelector(state => state.tasks)
+    let completedTasks = tasks.filter(task => task.status === 'completed')
 
     useEffect(() => {
         console.log('Tasks:', tasks);
@@ -15,8 +17,8 @@ function AllTasks() {
             <div className='w-full flex flex-col items-center justify-start gap-4 mt-4 bg-secondary p-4 rounded-3xl'>
 
                 {
-                    tasks?.length > 0 ?
-                        tasks.map((task, index) => {
+                    completedTasks?.length > 0 ?
+                    completedTasks.map((task, index) => {
                             return <ActiveTaskCard key={index} task={task} isDashboard={false} />
                         }) :
                         <h1 className="text-white text-2xl">No tasks found</h1>
@@ -26,4 +28,4 @@ function AllTasks() {
     )
 }
 
-export default AllTasks
+export default CompletedTasks
