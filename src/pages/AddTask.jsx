@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import FormInput from '../components/FormInput';
 import { Plus, Calendar, Clock, AlertCircle } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import AlertDisplay from '../components/AlertBox';
 
 const AddTask = () => {
     let { username } = useSelector(state => state.user);
     const [showNormalForm, setShowNormalForm] = useState(false);
     const [showDailyForm, setShowDailyForm] = useState(false);
+    let [loading, setLoading] = useState(false);
+    let [alert, setAlert] = useState(null);
+    let [alertType, setAlertType] = useState('success');
     const [taskData, setTaskData] = useState({
         title: '',
         description: '',
@@ -35,6 +39,7 @@ const AddTask = () => {
         setShowNormalForm(false);
 
         try {
+            setLoading(true);
             const response = await fetch(`${server_url}/api/create-task`, {
                 method: 'POST',
                 headers: {
@@ -47,14 +52,30 @@ const AddTask = () => {
             let data = await response.json();
             console.log('Response:', data);
 
-            if (response.ok) {
-                console.log('Task created successfully');
+            if (data.isSaved) {
+                setAlert('Task saved successfully');
+                setAlertType('success');
+                setTimeout(() => {
+                    setAlert(null);
+                }, 7000);
             } else {
-                console.log('Failed to create task');
+                console.log(data.message);
+                if (data.error) {
+                    setAlert(data.error);
+                }
+                else {
+                    setAlert(data.message);
+                }
+                setAlertType('error');
+                setTimeout(() => {
+                    setAlert(null);
+                }, 7000);
             }
         }
         catch (error) {
             console.log('Error:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -68,6 +89,9 @@ const AddTask = () => {
     return (
         <div className='w-full h-full flex flex-col justify-start mt-4 overflow-scroll no-scrollbar px-6'>
             <h1 className="text-3xl font-bold text-white mb-8">Add New Task</h1>
+            {
+                alert && <AlertDisplay alertType={alertType} alertMessage={alert} />
+            }
 
             {/* Button Container */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

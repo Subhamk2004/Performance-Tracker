@@ -19,6 +19,10 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
         setShowUpdate(!showUpdate);
     };
 
+    const updateTask = () => {
+        console.log('Task updated:', task._id);
+    };
+
     const getPriorityColor = (priority) => {
         const colors = {
             low: 'bg-blue-500',
@@ -29,8 +33,8 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
     };
 
     return (
-        <Link className="bg-primary rounded-3xl p-6 transition-all"
-        to='/alltask/pending'
+        <Link className="bg-primary rounded-3xl p-6 transition-all w-full"
+            to='/alltask'
         >
             <div className="flex items-center justify-between mb-4 gap-2">
                 <div className="flex items-center gap-4">
@@ -66,7 +70,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                     </span>
                     <span className="flex items-center">
                         <Clock size={16} className="mr-1" />
-                        Due: {formatDate(task.toBeDoneBy)}
+                        Due: {formatDate(task.dueDate)}
                     </span>
                 </div>
             </div>
@@ -75,7 +79,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                 <div className="mt-4 flex justify-end">
                     <button
                         className="bg-[#698eff] text-[#111525] px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-80 transition-all"
-                        onClick={() => console.log('Update task:', task.id)}
+                        onClick={updateTask}
                     >
                         Update Status
                     </button>
