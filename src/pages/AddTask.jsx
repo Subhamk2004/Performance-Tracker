@@ -17,6 +17,7 @@ const AddTask = () => {
         priority: 'low',
         dueDate: '',
         username: username,
+        type: 'task'
     });
 
     useEffect(() => {
@@ -26,6 +27,10 @@ const AddTask = () => {
     const [dailyData, setDailyData] = useState({
         title: '',
         description: '',
+        priority: 'medium',
+        dueDate: '',
+        username: username,
+        type: 'daily',
     });
     let priorityOptions = ['low', 'medium', 'high'];
     const maxDateObj = new Date();
@@ -79,11 +84,55 @@ const AddTask = () => {
         }
     };
 
-    const handleSubmitDaily = (e) => {
+    const handleSubmitDaily = async (e) => {
         e.preventDefault();
         console.log('Daily Data:', dailyData);
         setShowDailyForm(false);
-        setDailyData({ title: '', description: '' });
+        let dailtDate = new Date();
+        dailtDate.setDate(dailtDate.getDate());
+        const dueDate = dailtDate.toISOString().split('T')[0];
+        console.log('Daily Date:', dueDate);
+        dailyData.dueDate = dueDate;
+
+        try {
+            setLoading(true);
+            const response = await fetch(`${server_url}/api/create-task`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dailyData),
+                credentials: 'include',
+            });
+
+            let data = await response.json();
+            console.log('Response:', data);
+
+            if (data.isSaved) {
+                setAlert('Task saved successfully');
+                setAlertType('success');
+                setTimeout(() => {
+                    setAlert(null);
+                }, 7000);
+            } else {
+                console.log(data.message);
+                if (data.error) {
+                    setAlert(data.error);
+                }
+                else {
+                    setAlert(data.message);
+                }
+                setAlertType('error');
+                setTimeout(() => {
+                    setAlert(null);
+                }, 7000);
+            }
+        }
+        catch (error) {
+            console.log('Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -226,6 +275,16 @@ const AddTask = () => {
                             labelClassName='ml-1'
                             value={dailyData.description}
                             onChange={(e) => setDailyData({ ...dailyData, description: e.target.value })}
+                        />
+                        <FormInput
+                            title="Priority"
+                            labelFor="priority"
+                            isSelect={true}
+                            selectOptions={priorityOptions}
+                            inputClassName='bg-primary/50 text-black'
+                            labelClassName='ml-1'
+                            value={taskData.priority}
+                            onChange={(e) => setDailyData({ ...dailyData, priority: e.target.value })}
                         />
                         <div className="flex justify-end gap-4 mt-6">
                             <button

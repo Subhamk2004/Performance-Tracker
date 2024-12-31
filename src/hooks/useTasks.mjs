@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../reduxSlices/TaskSlice.mjs";
+import { addTask as addDailyTasks } from "../reduxSlices/DailyTasks.mjs";
 
 function useTasks() {
     const [tasks, setTasks] = useState([]);
+    const [dailyActivity, setDailyActivity] = useState([]);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,10 +23,14 @@ function useTasks() {
             });
             let data = await response.json();
             if (data.isSaved) {
-                dispatch(addTask(data.tasks));
-                setTasks(data.tasks);
-                console.log('Tasks:', data.tasks);
-
+                let normalTasks = data.tasks.filter((task) => task?.type !== 'daily');
+                let dailyTasks = data.tasks.filter((task) => task?.type === 'daily');
+                console.log(normalTasks, 'normalTasks');
+                dispatch(addDailyTasks(dailyTasks));
+                dispatch(addTask(normalTasks));
+                setTasks(normalTasks);
+                setDailyActivity(dailyTasks);
+                console.log('Tasks:', normalTasks);
             }
             else {
                 console.error('Error in fetchTasks:', data.message);
@@ -42,7 +48,7 @@ function useTasks() {
         fetchTasks();
     }, []);
 
-    return { tasks, loading, error };
+    return { tasks, loading, error, dailyActivity };
 }
 
 

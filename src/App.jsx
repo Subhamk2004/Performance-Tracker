@@ -12,6 +12,7 @@ import AllTasks from "./pages/AllTasks"
 import ActiveTask from "./pages/ActiveTasks"
 import CompletedTasks from "./pages/CompletedTasks"
 import PendingTasks from "./pages/PendingTasks"
+import DailyTasks from "./pages/DailyTasks"
 
 function App() {
   let router = createBrowserRouter([
@@ -62,6 +63,10 @@ function App() {
         {
           path: 'pending',
           element: <PendingTasks />
+        },
+        {
+          path: 'dailyactivity',
+          element: <DailyTasks />
         }
       ]
     }

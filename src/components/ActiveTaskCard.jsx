@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, CheckSquare, Square, AlertCircle, BookOpenTextIcon } from 'lucide-react';
+import { Calendar, Clock, CheckSquare, Square, AlertCircle, BookOpenTextIcon, CheckCircle } from 'lucide-react';
+import useTasks from '../hooks/useTasks.mjs';
+import { useNavigate } from 'react-router-dom';
+import IncomponentLoading from './InComponentLoading';
+
 
 const ActiveTaskCard = ({ task, isDashboard = false }) => {
     const [isChecked, setIsChecked] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
     let [loading, setLoading] = useState(false);
+    useTasks();
+    let navigate = useNavigate();
     let server_url = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
     const formatDate = (dateString) => {
@@ -32,6 +38,9 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                 body: JSON.stringify({ taskId: task._id })
             });
             let data = await response.json();
+            if (data.isSaved) {
+                navigate('/completed');
+            }
             console.log('Task updated:', data);
 
         } catch (error) {
@@ -56,7 +65,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
             <div className="flex items-center justify-between mb-4 gap-2">
                 <div className="flex items-center gap-4">
                     {
-                        !isDashboard &&
+                        !isDashboard && task.status !== "completed" && task.type !== 'daily' &&
                         <button onClick={handleCheck} className="text-gray-300 hover:text-[#698eff]">
                             {isChecked ?
                                 <CheckSquare className="w-6 h-6" /> :
@@ -66,6 +75,7 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                     }
                     <h3 className="text-lg font-bold text-[#698eff]">{task.title}</h3>
                 </div>
+
                 <div className="flex items-center gap-2">
                     <span className={`flex items-center text-xs px-3 py-1 rounded-full ${getPriorityColor(task.priority)} text-white`}>
                         <AlertCircle size={12} className="mr-1" />
@@ -79,18 +89,29 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                 {task.description}
             </p>
 
-            <div className="flex flex-wrap items-center justify-between text-sm text-gray-400 gap-4">
-                <div className="flex items-center gap-4">
-                    <span className="flex items-center">
-                        <Calendar size={16} className="mr-1" />
-                        Created: {formatDate(task.created_at)}
-                    </span>
-                    <span className="flex items-center">
-                        <Clock size={16} className="mr-1" />
-                        Due: {formatDate(task.dueDate)}
-                    </span>
+            {
+                task.type !== 'daily' &&
+                <div className="flex flex-wrap items-center justify-between text-sm text-gray-400 gap-4">
+                    <div className="flex items-center gap-4">
+                        <span className="flex items-center">
+                            <Calendar size={16} className="mr-1" />
+                            Created: {formatDate(task.created_at)}
+                        </span>
+                        {
+                            task.status === 'completed' ?
+                                <span className="flex items-center">
+                                    <CheckCircle size={16} color='green' className="mr-1" />
+                                    Completed
+                                </span> :
+                                <span className="flex items-center">
+                                    <Clock size={16} className="mr-1" />
+                                    Due: {formatDate(task.dueDate)}
+                                </span>
+                        }
+
+                    </div>
                 </div>
-            </div>
+            }
 
             {showUpdate && !isDashboard && (
                 <div className="mt-4 flex justify-between">
@@ -98,8 +119,9 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
                     <button
                         className="bg-[#698eff] text-[#111525] px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-80 transition-all"
                         onClick={updateTask}
+                        disabled={loading}
                     >
-                        Mark Completed
+                        {loading ? <IncomponentLoading isShort={true} /> : 'Mark Completed'}
                     </button>
                 </div>
             )}
