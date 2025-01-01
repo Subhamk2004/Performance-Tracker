@@ -5,13 +5,14 @@ import { format, parseISO } from 'date-fns';
 
 function DailyTasks() {
     const { tasks } = useSelector(state => state.dailyTasks);
-
+    console.log(tasks);
+    
     const groupTasksByDate = () => {
         if (!tasks?.length) return [];
 
         const grouped = tasks.reduce((acc, task) => {
-            if (!task.dueDate) return acc;
-            const date = format(parseISO(task.dueDate), 'yyyy-MM-dd');
+            if (!task.created_at) return acc;
+            const date = format(parseISO(task.created_at), 'yyyy-MM-dd');
             if (!acc[date]) {
                 acc[date] = [];
             }

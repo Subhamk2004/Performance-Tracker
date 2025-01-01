@@ -9,7 +9,7 @@ function AllTasks() {
         console.log('Tasks:', tasks);
     }, [tasks]);
     
-    const [sort, setSort] = React.useState('completion');
+    const [sort, setSort] = React.useState('creation');
     const sortTasks = (tasks, sortBy) => {
         const priorityWeight = {
             'high': 3,
@@ -45,9 +45,9 @@ function AllTasks() {
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
                 >
+                    <option value="creation">Creation Date</option>
                     <option value="completion">Due Date</option>
                     <option value="priority">Priority</option>
-                    <option value="creation">Creation Date</option>
                 </select>
             </div>
             <div className='w-full flex flex-col items-center justify-start gap-4 mt-4 bg-secondary p-4 rounded-3xl'>

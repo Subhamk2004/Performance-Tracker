@@ -17,6 +17,7 @@ function Dashboard() {
   let { repos, loading } = getGithubRepos();
   let { tasks } = useSelector(state => state.tasks)
   let activeTasks = tasks.filter(task => task.status === 'active')
+  let { name } = useSelector(state => state.user)
   let { isAuthenticated } = useSelector(state => state.user);
   let navigate = useNavigate();
 
@@ -33,7 +34,7 @@ function Dashboard() {
         <div className='flex flex-row flex-wrap items-center gap-6 lg:gap-16'>
           <div>
             <h1 className='text-2xl font-semibold text-white leading-[1.5]'>
-              Hello, Subham 👋
+              Hello, {name} 👋
             </h1>
             <h3 className='text-gray-400 text-sm'>
               Quickly access your tasks and recent GitHub activity
