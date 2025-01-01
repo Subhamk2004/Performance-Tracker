@@ -1,4 +1,4 @@
-import { Circle, CrossIcon, Plus, ShieldCheck } from 'lucide-react';
+import { Circle, CrossIcon, Plus, ShieldCheck, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import { set } from 'zod';
 import IncomponentLoading from './InComponentLoading';
@@ -22,7 +22,7 @@ function SearchedItems({
                 searchedItems.length === 0 ?
                     <div className='bg-secondary p-3 rounded-3xl mt-2 flex flex-col gap-3 shadow-black shadow-lg absolute z-20'>
                         <button className='flex justify-end' onClick={closeSearch}>
-                            <Plus size='24' className='text-white' />
+                            <X size='24' className='text-white' />
                         </button>
                         <div className="bg-[#111525] rounded-3xl p-6 transition-all bg-gradient-to-tl from-primary via-primary to-primary border-gray-600 w-[350px]">
                             {

@@ -28,6 +28,10 @@ function Login() {
                 credentials: 'include'
             });
             let data = await response.json();
+            if(data.user) {
+                console.log(data.user);
+                navigate('/dashboard');
+            }
             console.log(data);
 
         } catch (error) {

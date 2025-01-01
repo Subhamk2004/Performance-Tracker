@@ -3,7 +3,9 @@ import { SearchIcon, Github, LucideClipboardPenLine } from 'lucide-react'
 import SearchedItems from './SearchedItems';
 import { useSelector } from 'react-redux';
 
-function Search() {
+function Search({
+    fromWhere = 'dashboard'
+}) {
 
     let [activeRepoBtn, setActiveRepoBtn] = useState(false);
     let [activeTaskBtn, setActiveTaskBtn] = useState(false);
@@ -12,7 +14,7 @@ function Search() {
     let [taskBtnClassname, setTaskBtnClassname] = useState('p-1 hover:bg-primary rounded-lg relative group');
     let [loading, setLoading] = useState(false);
     let [items, setItems] = useState([]);
-    let {githubusername} = useSelector(state => state.user);
+    let { githubusername } = useSelector(state => state.user);
     const serverUrl = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
     let searchRepo = async (e) => {
@@ -78,21 +80,26 @@ function Search() {
                     placeholder='Search tasks, repos....'
                     className='bg-secondary text-white px-4 py-2 rounded-lg outline-none w-[200px]'
                 />
-                <button className={`${repoBtnClassname}`}
-                    onClick={activateRepoBtn} disabled={loading}
-                >
-                    <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 bg-black text-white p-1 rounded'>
-                        Search GitHub repos
-                    </p>
-                    <Github size='24' className='text-white' />
-                </button>
+                {
+                    fromWhere === 'dashboard' ?
+                        <button className={`${repoBtnClassname}`}
+                            onClick={activateRepoBtn} disabled={loading}
+                        >
+                            <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 bg-black text-white p-1 rounded'>
+                                Search GitHub repos
+                            </p>
+                            <Github size='24' className='text-white' />
+                        </button>
+                        :
 
-                <button className={`${taskBtnClassname}`}
-                    onClick={activateTaskBtn} disabled={loading}
-                >
-                    <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 right-0 bg-black text-white p-1 rounded'>Search tasks</p>
-                    <LucideClipboardPenLine size='24' className='text-white' />
-                </button>
+                        <button className={`${taskBtnClassname}`}
+                            onClick={activateTaskBtn} disabled={loading}
+                        >
+                            <p className='opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs absolute -bottom-7 w-32 right-0 bg-black text-white p-1 rounded'>Search tasks, notes...</p>
+                            <LucideClipboardPenLine size='24' className='text-white' />
+                        </button>
+                }
+
             </form>
             {
                 search && activeRepoBtn &&

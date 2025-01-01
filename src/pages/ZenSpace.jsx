@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import started_audio from '../assets/audios/started.mp3';
-import ongoing from '../assets/audios/break_audio.mp3';
+import ongoing from '../assets/audios/noEnemies.mp3';
+import ongoing1 from '../assets/audios/letGo.mp3';
 import bg from '../assets/images/bg.jpg';
 import stopwatch from '../assets/images/stopwatch.png';
 import { PauseCircle, PlayCircle, TimerReset, Play } from 'lucide-react';
 
 const ZenSpace = () => {
     const [time, setTime] = useState({ minutes: 30, seconds: 0 });
+    const [audio, setAudio] = useState(ongoing);
     const [isRunning, setIsRunning] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const timerRef = useRef(null);
@@ -30,6 +32,17 @@ const ZenSpace = () => {
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (ongoingAudioRef.current) {
+            const wasPlaying = !ongoingAudioRef.current.paused;
+            ongoingAudioRef.current.pause();
+            ongoingAudioRef.current.load();
+            if (wasPlaying) {
+                ongoingAudioRef.current.play();
+            }
+        }
+    }, [audio]);
 
     const startTimer = () => {
         setIsRunning(true);
@@ -198,11 +211,25 @@ const ZenSpace = () => {
                     </div>
                 </div>
 
+                <div className='bg-white/30 backdrop-blur-lg shadow-lg mt-12 flex flex-col items-center rounded-2xl overflow-hidden mb-12 p-3 lg:w-[450px]'>
+                    <h2 className='my-2 font-semibold'>Choose Background Music</h2>
+                    <select
+                        className='w-60 h-10 bg-white/30 backdrop-blur-lg rounded-lg text-white text-lg font-semibold px-3'
+                        onChange={(e) => {
+                            const newAudio = e.target.value === 'noEnemies' ? ongoing : ongoing1;
+                            setAudio(newAudio);
+                        }}
+                    >
+                        <option value="noEnemies">No Enemies</option>
+                        <option value="letGo">Let Go</option>
+                    </select>
+                </div>
+
                 <audio ref={startAudioRef}>
                     <source src={started_audio} type="audio/mpeg" />
                 </audio>
                 <audio ref={ongoingAudioRef}>
-                    <source src={ongoing} type="audio/mpeg" />
+                    <source src={audio} type="audio/mpeg" />
                 </audio>
             </div>
         </div>

@@ -25,7 +25,7 @@ function useTasks() {
             if (data.isSaved) {
                 let normalTasks = data.tasks.filter((task) => task?.type !== 'daily');
                 let dailyTasks = data.tasks.filter((task) => task?.type === 'daily');
-                console.log(normalTasks, 'normalTasks');
+                console.log(dailyTasks, 'daily');
                 dispatch(addDailyTasks(dailyTasks));
                 dispatch(addTask(normalTasks));
                 setTasks(normalTasks);

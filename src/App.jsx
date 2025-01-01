@@ -14,6 +14,8 @@ import CompletedTasks from "./pages/CompletedTasks"
 import PendingTasks from "./pages/PendingTasks"
 import DailyTasks from "./pages/DailyTasks"
 import ZenSpace from "./pages/ZenSpace"
+import QuickNotes from "./pages/QuickNotes"
+import Friends from "./pages/Friends"
 
 function App() {
   let router = createBrowserRouter([
@@ -72,6 +74,14 @@ function App() {
         {
           path: 'zenspace',
           element: <ZenSpace />
+        },
+        {
+          path: 'notes',
+          element: <QuickNotes />
+        },
+        {
+          path: 'friends',
+          element: <Friends />
         }
       ]
     }

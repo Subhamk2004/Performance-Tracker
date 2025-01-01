@@ -52,8 +52,6 @@ function GuestNavbar() {
                     </NavLink>
                 </div>
             </div>
-
-            <ProfileCardNav name='Subham' institute='Developer' />
         </nav>
     )
 }
