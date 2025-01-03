@@ -35,8 +35,8 @@ function Search({
                         throw new Error("Failed to fetch repos");
                     }
                     const data = await response.json();
-                    console.log(data.items);
-                    setItems(data.items);
+                    console.log(data);
+                    setItems(data);
 
                 }
                 else if (activeTaskBtn) {
