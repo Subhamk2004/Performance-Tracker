@@ -5,14 +5,10 @@ import Navbar from "./components/Navbar";
 import GuestNavbar from "./components/GuestNavbar";
 import { useSelector } from "react-redux";
 import useAuth from "./hooks/useAuth.mjs";
-import useTasks from "./hooks/useTasks.mjs";
-import useNotes from "./hooks/useNotes.mjs";
 
 
 function Router() {
     const { isLoading, error, authData } = useAuth();
-    const { notes } = useNotes();
-    const { tasks, loading, error: taskError, dailyActivity } = useTasks();
     let navigate = useNavigate();
     let { isAuthenticated } = useSelector(state => state.user);
     useEffect(() => {
