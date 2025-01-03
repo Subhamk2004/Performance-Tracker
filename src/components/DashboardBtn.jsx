@@ -2,7 +2,6 @@ import React from 'react';
 import { Plus, ListTodo, Clock, Calendar, Star, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import IncomponentLoading from './InComponentLoading';
 
 const AddTaskButton = () => {
     const navigate = useNavigate();

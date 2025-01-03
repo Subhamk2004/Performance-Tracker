@@ -33,7 +33,6 @@ function PendingTasks() {
     const sortedTasks = sortTasks(pendingTasks, sort);
 
     useEffect(() => {
-        console.log('Tasks:', tasks);
     }, [tasks]);
     return (
         <div className='w-full h-full flex flex-col items-start justify-start overflow-scroll no-scrollbar'>

@@ -26,7 +26,6 @@ function QuickNotes() {
         username: username
     });
     useEffect(() => {
-        console.log(notes);
     }, [deleteNote])
 
 
@@ -43,7 +42,6 @@ function QuickNotes() {
             });
             const data = await response.json();
             if (data.success) {
-                console.log('Note deleted successfully', data);
                 dispatch(deleteNote(noteId));
             }
         } catch (error) {

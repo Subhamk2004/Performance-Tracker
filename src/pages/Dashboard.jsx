@@ -75,7 +75,7 @@ function Dashboard() {
         {
           activeTasks?.map((task) => {
             return (
-              <ActiveTaskCard task={task} key={task.id} isDashboard={true} />
+              <ActiveTaskCard task={task} key={task._id} isDashboard={true} />
             )
           })
         }

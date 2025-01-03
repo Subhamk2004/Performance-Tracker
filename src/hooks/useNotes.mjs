@@ -19,7 +19,6 @@ export default function useNotes() {
         let data = await response.json();
 
         if (data.success) {
-            console.log('Notes fetched successfully:', data.notes);
             setNotes(data);
             dispatch(addNote(data.notes));
         }

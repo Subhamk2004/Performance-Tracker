@@ -16,7 +16,6 @@ function Router() {
     let navigate = useNavigate();
     let { isAuthenticated } = useSelector(state => state.user);
     useEffect(() => {
-        console.log('Auth data:', authData, 'isAuthenticated:', isAuthenticated);
     }, [authData, tasks, dailyActivity, loading, error, taskError, notes]);
 
     useEffect(() => {

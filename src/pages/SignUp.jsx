@@ -48,7 +48,6 @@ function Signup() {
                 formData.append(key, user[key]);
             }
         });
-        console.log(formData);
         try {
             setLoading(true);
             let response = await fetch(`${serverUrl}/api/signup`, {
@@ -58,7 +57,6 @@ function Signup() {
             });
 
             const data = await response.json();
-            console.log(data);
             if (data.isSaved) {
                 setAlert('User registered successfully');
                 setAlertType('success');
@@ -68,7 +66,6 @@ function Signup() {
                 }, 7000);
             }
             else {
-                console.log(data.message);
                 if (data.error) {
                     setAlert(data.error);
                 }

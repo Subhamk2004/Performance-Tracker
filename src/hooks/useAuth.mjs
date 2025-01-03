@@ -29,7 +29,6 @@ function useAuth() {
 
             if (data.user) {
                 dispatch(authenticate(data.user));
-                console.log('Auth data:', data.user);
             }
         } catch (error) {
             console.error('Error in authStatus:', error);

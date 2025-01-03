@@ -8,7 +8,6 @@ function AllTasks() {
     useTasks();
     let { tasks } = useSelector(state => state.tasks)
     useEffect(() => {
-        console.log('Tasks:', tasks);
     }, [tasks]);
     
     const [sort, setSort] = React.useState('creation');

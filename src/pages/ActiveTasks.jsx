@@ -6,7 +6,6 @@ import TaskNav from '../components/TaskNav';
 function ActiveTasks() {
     let { tasks } = useSelector(state => state.tasks)
     let activeTasks = tasks.filter(task => task.status === 'active')
-    console.log(activeTasks);
     const [sort, setSort] = React.useState('completion');
     const sortTasks = (tasks, sortBy) => {
         const priorityWeight = {
@@ -35,7 +34,6 @@ function ActiveTasks() {
 
 
     useEffect(() => {
-        console.log('Tasks:', tasks);
     }, [tasks]);
     return (
         <div className='w-full h-full flex flex-col items-start justify-start overflow-scroll no-scrollbar'>

@@ -23,11 +23,10 @@ function getGithubRepos() {
                     throw new Error("Failed to fetch repos");
                 }
                 const data = await response.json();
-                console.log(data);
 
                 setRepos(data);
             } catch (error) {
-                console.error("Error:", error);
+                console.log("Error:", error);
             } finally {
                 setLoading(false);
             }
@@ -35,7 +34,6 @@ function getGithubRepos() {
         fetchRepos();
     }, []);
 
-    console.log(repos);
     return { repos, loading };
 }
 

@@ -6,7 +6,6 @@ function AlertDisplay({
     alertMessage = 'Something went wrong, try refreshing the page', alertType = 'warning' }) {
     // const { error } = useAuth();
     // let error = '';
-    console.log(alertMessage);
     
     let startStyle = 'transition-all h-full w-[5px]';
     let stopStyle = 'transition-all duration-[4500ms] ease-in w-[5px] h-[0px]'
@@ -26,12 +25,10 @@ function AlertDisplay({
                 setStyle(stopStyle);
                 setTimeout(() => {
                     setAlertIndicator('');
-                    console.log('Inside the inner hey');
                 }, 7000)
             }, 500)
         }
 
-        console.log('Hey');
     }, [alertType])
 
 
@@ -73,7 +70,6 @@ function AlertDisplay({
                             </div>
                             <button onClick={(e) => {
                                 setAlertIndicator('');
-                                console.log(alertIndicator);
                             }}
                                 className='absolute top-[6px] right-[6px] bg-[#7fe66a57] hover:bg-[#6ec75c93] rounded-full '
                             >
@@ -97,7 +93,6 @@ function AlertDisplay({
                             </div>
                             <button onClick={(e) => {
                                 setAlertIndicator('');
-                                console.log(alertIndicator);
                             }}
                                 className='absolute top-[6px] right-[6px] bg-[#e6c56a57] hover:bg-[#c7c05c93] rounded-full'
                             >
@@ -121,7 +116,6 @@ function AlertDisplay({
                             </div>
                             <button onClick={(e) => {
                                 setAlertIndicator('');
-                                console.log(alertIndicator);
                             }}
                                 className='absolute top-[6px] right-[6px] bg-[#e66a6a57] hover:bg-[#c75c5c93] rounded-full'
                             >

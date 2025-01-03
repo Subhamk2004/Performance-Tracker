@@ -27,7 +27,6 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
     };
 
     const updateTask = async () => {
-        console.log('Task updated:', task._id);
         try {
             setLoading(true);
             let response = await fetch(`${server_url}/api/updateTask?${task._id}`, {
@@ -41,7 +40,6 @@ const ActiveTaskCard = ({ task, isDashboard = false }) => {
             if (data.isSaved) {
                 navigate('/completed');
             }
-            console.log('Task updated:', data);
 
         } catch (error) {
             console.error('Error:', error);

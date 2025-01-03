@@ -21,7 +21,6 @@ function useStreak() {
             if (data.success) {
                 setStreak(data.streak);
                 setLongestStreak(data.longestStreak)
-                console.log('Streak:', data.streak);
             }
             else {
                 console.error('Error in fetchStreak:', data.message);

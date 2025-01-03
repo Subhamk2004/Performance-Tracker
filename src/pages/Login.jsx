@@ -32,11 +32,9 @@ function Login() {
             });
             let data = await response.json();
             if(data.user) {
-                console.log(data.user);
                 dispatch(authenticate(data.user));
                 navigate('/dashboard');
             }
-            console.log(data);
 
         } catch (error) {
             console.log(error);

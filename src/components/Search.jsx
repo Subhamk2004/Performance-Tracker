@@ -23,7 +23,6 @@ function Search({
             try {
                 setLoading(true);
                 if (activeRepoBtn) {
-                    console.log('Searching for repos');
                     let response = await fetch(`${serverUrl}/api/github-repos?search=${search}&user=${githubusername}`, {
                         method: 'GET',
                         headers: {
@@ -35,12 +34,10 @@ function Search({
                         throw new Error("Failed to fetch repos");
                     }
                     const data = await response.json();
-                    console.log(data);
                     setItems(data);
 
                 }
                 else if (activeTaskBtn) {
-                    console.log('Searching for tasks');
                 }
             } catch (error) {
                 console.log(error);

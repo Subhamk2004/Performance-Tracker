@@ -40,7 +40,6 @@ const AddTask = () => {
 
     const handleSubmitTask = async (e) => {
         e.preventDefault();
-        console.log('Task Data:', taskData);
         setShowNormalForm(false);
 
         try {
@@ -55,7 +54,6 @@ const AddTask = () => {
             });
 
             let data = await response.json();
-            console.log('Response:', data);
 
             if (data.isSaved) {
                 setAlert('Task saved successfully');
@@ -64,7 +62,6 @@ const AddTask = () => {
                     setAlert(null);
                 }, 7000);
             } else {
-                console.log(data.message);
                 if (data.error) {
                     setAlert(data.error);
                 }
@@ -86,12 +83,10 @@ const AddTask = () => {
 
     const handleSubmitDaily = async (e) => {
         e.preventDefault();
-        console.log('Daily Data:', dailyData);
         setShowDailyForm(false);
         let dailtDate = new Date();
         dailtDate.setDate(dailtDate.getDate());
         const dueDate = dailtDate.toISOString().split('T')[0];
-        console.log('Daily Date:', dueDate);
         dailyData.dueDate = dueDate;
 
         try {
@@ -106,7 +101,6 @@ const AddTask = () => {
             });
 
             let data = await response.json();
-            console.log('Response:', data);
 
             if (data.isSaved) {
                 setAlert('Task saved successfully');
@@ -115,7 +109,6 @@ const AddTask = () => {
                     setAlert(null);
                 }, 7000);
             } else {
-                console.log(data.message);
                 if (data.error) {
                     setAlert(data.error);
                 }

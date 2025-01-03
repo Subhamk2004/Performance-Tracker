@@ -10,7 +10,6 @@ function SearchedItems({
 }) {
 
     let [searchedItems, setSearchedItems] = useState(items);
-    console.log(items, 'inside the component');
 
     useEffect(() => {
         setSearchedItems(items);

@@ -7,7 +7,6 @@ import useTasks from '../hooks/useTasks.mjs';
 function DailyTasks() {
     useTasks();
     const { tasks } = useSelector(state => state.dailyTasks);
-    console.log(tasks);
     
     const groupTasksByDate = () => {
         if (!tasks?.length) return [];

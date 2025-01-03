@@ -25,12 +25,10 @@ function useTasks() {
             if (data.isSaved) {
                 let normalTasks = data.tasks.filter((task) => task?.type !== 'daily');
                 let dailyTasks = data.tasks.filter((task) => task?.type === 'daily');
-                console.log(dailyTasks, 'daily');
                 dispatch(addDailyTasks(dailyTasks));
                 dispatch(addTask(normalTasks));
                 setTasks(normalTasks);
                 setDailyActivity(dailyTasks);
-                console.log('Tasks:', normalTasks);
             }
             else {
                 console.error('Error in fetchTasks:', data.message);
