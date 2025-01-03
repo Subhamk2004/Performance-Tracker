@@ -17,7 +17,7 @@ function Router() {
     let { isAuthenticated } = useSelector(state => state.user);
     useEffect(() => {
         console.log('Auth data:', authData, 'isAuthenticated:', isAuthenticated);
-    }, [authData, tasks, dailyActivity, loading, error, taskError, notes]);
+    }, []);
 
     useEffect(() => {
         if (!isAuthenticated) {
