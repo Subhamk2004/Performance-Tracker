@@ -26,7 +26,7 @@ function Router() {
 
 
     return (
-        <div className="w-full h-full flex flex-row gap-14 px-4 py-10 text-white">
+        <div className="w-full h-full flex flex-col sm:flex-row gap-14 px-4 py-10 text-white">
             {
                 !isAuthenticated ?
                     <GuestNavbar /> :
