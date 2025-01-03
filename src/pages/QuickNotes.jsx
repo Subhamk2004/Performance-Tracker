@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { addSingleNote, deleteNote } from '../reduxSlices/Notes.mjs'
 
 function QuickNotes() {
+    useNotes();
     let { notes } = useSelector(state => state.notes);
     let sortedNotes = [...notes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     let [showForm, setShowForm] = React.useState(false);

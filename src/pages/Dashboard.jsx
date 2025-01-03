@@ -11,9 +11,10 @@ import Search from '../components/Search'
 import IncomponentLoading from '../components/InComponentLoading'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import useTasks from '../hooks/useTasks.mjs'
 
 function Dashboard() {
-
+  useTasks();
   let { repos, loading } = getGithubRepos();
   let { tasks } = useSelector(state => state.tasks)
   let activeTasks = tasks.filter(task => task.status === 'active')

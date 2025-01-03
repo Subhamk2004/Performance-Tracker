@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import ActiveTaskCard from '../components/ActiveTaskCard';
 import TaskNav from '../components/TaskNav';
+import useTasks from '../hooks/useTasks.mjs';
 
 function AllTasks() {
+    useTasks();
     let { tasks } = useSelector(state => state.tasks)
     useEffect(() => {
         console.log('Tasks:', tasks);

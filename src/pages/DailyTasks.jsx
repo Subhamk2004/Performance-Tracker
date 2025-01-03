@@ -2,8 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ActiveTaskCard from '../components/ActiveTaskCard';
 import { format, parseISO } from 'date-fns';
+import useTasks from '../hooks/useTasks.mjs';
 
 function DailyTasks() {
+    useTasks();
     const { tasks } = useSelector(state => state.dailyTasks);
     console.log(tasks);
     
