@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import { set, z } from 'zod';
 import FormInput from '../components/FormInput';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { authenticate } from '../reduxSlices/UserSlice.mjs';
+
 
 function Login() {
     let { isAuthenticated } = useSelector(state => state.user);
@@ -10,6 +12,7 @@ function Login() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
     let [loading, setLoading] = useState(false);
+    let dispatch = useDispatch();
     let serverUrl = import.meta.env.VITE_SKILLSLOG_SERVER_URL;
 
     let handleSubmit = async (e) => {
@@ -30,6 +33,7 @@ function Login() {
             let data = await response.json();
             if(data.user) {
                 console.log(data.user);
+                dispatch(authenticate(data.user));
                 navigate('/dashboard');
             }
             console.log(data);
