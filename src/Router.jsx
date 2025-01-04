@@ -52,7 +52,7 @@ function Router() {
             </div>
             {
                 showChatBot &&
-                <div className="fixed bottom-32 max-h-[600px] right-[15px] md:right-10 w-[375px] md:w-auto md:max-w-[480px] lg:max-w-[700px] md:h-[600px] lg:h-[600px] bg-secondary shadow-lg shadow-[black] rounded-3xl z-20 overflow-scroll no-scrollbar">
+                <div className="fixed bottom-32 max-h-[600px] right-[15px] md:right-10 w-[340px] sm:w-[375px] md:w-auto md:max-w-[480px] lg:max-w-[700px] md:h-[600px] lg:h-[600px] bg-secondary shadow-lg shadow-[black] rounded-3xl z-20 overflow-scroll no-scrollbar">
                     <AI />
                 </div>
             }
