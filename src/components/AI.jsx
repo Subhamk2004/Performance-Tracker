@@ -10,8 +10,8 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 function AI() {
     let { isAuthenticated, name, username, email } = useSelector(state => state.user);
     let AI_API_KEY = import.meta.env.VITE_AI_API_KEY;
-    console.log(AI_API_KEY);
-    
+    // console.log(AI_API_KEY);
+
     const genAI = new GoogleGenerativeAI(AI_API_KEY);
     let [generatedResult, setGeneratedResult] = useState(null);
     let [generatedResultarray, setGeneratedResultArray] = useState([]);
@@ -84,7 +84,7 @@ function AI() {
                     strong: ({ children }) => <strong className="font-bold">{children}</strong>,
                     em: ({ children }) => <em className="italic">{children}</em>,
                 }}
-                className="text-btnclr font-[550] pl-4 text-sm md:text-base rounded-bl-none p-4 rounded-2xl bg-primary/25 w-[90%]"
+                className="text-darkGray font-[600] pl-4 text-lg  rounded-bl-none p-4 rounded-2xl bg-primary/25 w-[90%]"
             >
                 {text}
             </ReactMarkdown>
