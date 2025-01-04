@@ -10,6 +10,8 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 function AI() {
     let { isAuthenticated, name, username, email } = useSelector(state => state.user);
     let AI_API_KEY = import.meta.env.VITE_AI_API_KEY;
+    console.log(AI_API_KEY);
+    
     const genAI = new GoogleGenerativeAI(AI_API_KEY);
     let [generatedResult, setGeneratedResult] = useState(null);
     let [generatedResultarray, setGeneratedResultArray] = useState([]);
