@@ -1,26 +1,78 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, Hash, Edit, Trash, BookOpen } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+
+import { useState } from "react"
+import { Calendar, Hash, Trash, BookOpen } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { detectCodeBlocks } from "../utils/CodeFormatter.js"
 
 const NoteCard = ({ note, onDelete, loading }) => {
-    const [showActions, setShowActions] = useState(false);
-    const navigate = useNavigate();
-    let [clampStyle, setClampStyle] = useState('line-clamp-3');
+    const [showActions, setShowActions] = useState(false)
+    const navigate = useNavigate()
+    const [clampStyle, setClampStyle] = useState("line-clamp-3")
+
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
-    };
+        return new Date(dateString).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        })
+    }
 
     const handleEdit = () => {
         // navigate(`/notes/edit/${note._id}`);
-    };
+    }
+
+    const formatTextContent = (text) => {
+        // Preserve existing formatting
+        return text
+    }
+
+    const renderContent = () => {
+        const processedContent = detectCodeBlocks(note.content)
+
+        return (
+            <div className="text-gray-300 text-base">
+                {processedContent.map((part, index) => {
+                    if (part.type === "text") {
+                        return (
+                            <pre key={index} className="whitespace-pre-line mb-3">
+                                {formatTextContent(part.content)}
+                            </pre>
+                        )
+                    } else if (part.type === "code") {
+                        return (
+                            <div key={index} className="mb-3 rounded-lg overflow-hidden">
+                                <SyntaxHighlighter
+                                    language={part.language}
+                                    style={atomDark}
+                                    customStyle={{
+                                        margin: 0,
+                                        padding: "1rem",
+                                        fontSize: "0.875rem",
+                                        lineHeight: "1.5",
+                                        borderRadius: "0.5rem",
+                                        maxHeight: "300px",
+                                        overflow: "auto",
+                                    }}
+                                    showLineNumbers={true}
+                                    wrapLines={true}
+                                    wrapLongLines={false}
+                                >
+                                    {part.content}
+                                </SyntaxHighlighter>
+                            </div>
+                        )
+                    }
+                    return null
+                })}
+            </div>
+        )
+    }
 
     return (
         <div
-            className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg w-[350px] shadow-lg shadow-black"
+            className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg shadow-lg shadow-black"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
         >
@@ -32,50 +84,24 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
                 {showActions && (
                     <div className="flex items-center gap-3">
-                        {/* <button
-                            onClick={handleEdit}
-                            className="text-gray-400 hover:text-[#698eff] transition-colors"
-                        >
-                            <Edit size={18} />
-                        </button> */}
-                        <button
-                            onClick={() => onDelete(note._id)}
-                            className="text-gray-400 hover:text-red-500 transition-colors"
-                        >
+                        <button onClick={() => onDelete(note._id)} className="text-gray-400 hover:text-red-500 transition-colors">
                             <Trash size={18} />
                         </button>
                     </div>
                 )}
             </div>
 
-            <div className={`text-gray-300 text-lg mb-3 ${clampStyle}`}>
-                {note.content}
-            </div>
-            {
-                clampStyle === 'line-clamp-none' ?
-                    <button className='mb-3 bg-btnclr text-black p-1 px-3 rounded-3xl text-sm'
-                        onClick={(e) => setClampStyle('line-clamp-3')}
-                    >
-                        Read less
-                    </button>
-                    :
-                    <button className='mb-3 bg-btnclr text-black p-1 px-3 rounded-3xl text-sm'
-                        onClick={(e) => setClampStyle('line-clamp-none')}
-                    >
-                        Read more
-                    </button>
-            }
+            <div className={`${clampStyle} flex flex-row min-w-[400px] w-auto max-w-[500px] flex-wrap overflow-scroll mb-3 `}>{renderContent()}</div>
+            
 
             <div className="flex flex-wrap gap-2 mb-4">
-                {note.hashtags.map((tag, index) => (
-                    <span
-                        key={index}
-                        className="flex items-center text-xs px-3 py-1 rounded-full bg-[#2a3447] text-[#698eff]"
-                    >
-                        <Hash size={12} className="mr-1" />
-                        {tag.replace('#', '')}
-                    </span>
-                ))}
+                {note.hashtags &&
+                    note.hashtags.map((tag, index) => (
+                        <span key={index} className="flex items-center text-xs px-3 py-1 rounded-full bg-[#2a3447] text-[#698eff]">
+                            <Hash size={12} className="mr-1" />
+                            {tag.replace("#", "")}
+                        </span>
+                    ))}
             </div>
 
             <div className="flex flex-wrap items-center justify-between text-sm text-gray-400">
@@ -84,17 +110,10 @@ const NoteCard = ({ note, onDelete, loading }) => {
                         <Calendar size={16} className="mr-1" />
                         Created: {formatDate(note.created_at)}
                     </span>
-                    {/* <span className="flex items-center">
-                        <Clock size={16} className="mr-1" />
-                        Updated: {formatDate(note.updated_at)}
-                    </span> */}
                 </div>
-                {/* <span className="text-xs text-gray-500">
-                    By {note.username}
-                </span> */}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default NoteCard;
+export default NoteCard
