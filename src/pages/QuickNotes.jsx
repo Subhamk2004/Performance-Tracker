@@ -103,7 +103,7 @@ function QuickNotes() {
         <div className='w-full h-full flex flex-col items-start justify-start overflow-scroll no-scrollbar'>
             <div className='flex flex-col w-full gap-6'>
                 <div className='flex flex-row flex-wrap items-center justify-start gap-3'>
-                    <Search fromWhere='notes'/>
+                    <Search fromWhere='notes' />
                     <button
                         className='bg-btnclr text-black p-4 py-3 font-semibold rounded-3xl mt-2 flex items-center justify-center'
                         onClick={() => setShowForm(!showForm)}
@@ -142,7 +142,7 @@ function QuickNotes() {
                         />
                         <FormInput
                             title="Content"
-                            type='textArea'
+                            type='textarea'
                             name='content'
                             value={noteData.content}
                             isRequired={true}

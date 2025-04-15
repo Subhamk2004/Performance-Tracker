@@ -18,61 +18,54 @@ function FormInput({
   max
 }) {
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && e.shiftKey) {
+    if (type === 'textarea' && e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      
-      if (type === 'textarea' || e.target.tagName.toLowerCase() === 'textarea') {
-        const cursorPosition = e.target.selectionStart;
-        const textBeforeCursor = e.target.value.substring(0, cursorPosition);
-        const textAfterCursor = e.target.value.substring(cursorPosition);
-        
-        const newValue = textBeforeCursor + '\n' + textAfterCursor;
-        
-        if (onChange) {
-          const syntheticEvent = {
-            target: {
-              value: newValue
-            }
-          };
-          onChange(syntheticEvent);
-          
-          setTimeout(() => {
-            e.target.selectionStart = cursorPosition + 1;
-            e.target.selectionEnd = cursorPosition + 1;
-          }, 0);
-        }
-      }
     }
   };
 
   return (
     <div className='flex flex-col w-full gap-1'>
-      <label htmlFor={labelFor} className={` font-semibold ${labelClassName}`}>
+      <label htmlFor={labelFor} className={`font-semibold ${labelClassName}`}>
         {title}
       </label>
       {
-        isSelect ?
+        isSelect ? (
           <select
             id={labelFor}
             required={isRequired}
             onChange={onChange}
             className='w-full h-10 border-[1px] border-primary rounded-lg p-2 text-primary text-lg outline-none focus:bg-[#e7ebff]'
           >
-            {
-              selectOptions.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))
-            }
-          </select> :
+            {selectOptions.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        ) : type === 'textarea' ? (
+          <>
+            <textarea
+              placeholder={placeholder}
+              id={labelFor}
+              onChange={onChange}
+              onKeyDown={handleKeyDown}
+              value={value}
+              required={isRequired}
+              readOnly={isReadOnly}
+              className={`w-full border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white resize-y`}
+              rows={4} // Default rows, can be overridden by inputClassName
+            />
+            {alertText.length > 0 && (
+              <p className='text-sm text-alertclr'>{alertText}</p>
+            )}
+          </>
+        ) : (
           <>
             <input
               placeholder={placeholder}
               id={labelFor}
               type={type}
               onChange={onChange}
-              onKeyDown={handleKeyDown}
               value={value}
               min={min}
               max={max}
@@ -80,11 +73,11 @@ function FormInput({
               readOnly={isReadOnly}
               className={`w-full h-10 border-[1px] border-primary rounded-lg p-2 text-lg outline-none focus:bg-primary ${inputClassName} text-white`}
             />
-            {
-              alertText.length > 0 &&
+            {alertText.length > 0 && (
               <p className='text-sm text-alertclr'>{alertText}</p>
-            }
+            )}
           </>
+        )
       }
     </div>
   )
