@@ -6,6 +6,7 @@ import IncomponentLoading from './InComponentLoading';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import FormInput from './FormInput';
 
 function AI() {
     let { isAuthenticated, name, username, email } = useSelector(state => state.user);
@@ -185,10 +186,11 @@ Ok Gemini now I am done, for your reference user's previous question was: ${prev
             </div>
 
             <form className='w-full flex flex-row justify-between gap-4' onSubmit={generateContentFn}>
-                <input
+                <FormInput
                     value={prompt}
+                    type="textarea"
                     onChange={(e) => setPrompt(e.target.value)}
-                    className='rounded-3xl px-6 py-3 bg-secondary text-white lg:text-xl lg:font-semibold shadow-md border outline-none w-[75%] focus:bg-primary'
+                    inputClassName='rounded-3xl px-6 py-3 bg-primary text-white lg:text-xl lg:font-semibold shadow-md border outline-none w-[75%] focus:bg-primary'
                 />
                 <button
                     className='rounded-3xl px-6 py-3 text-black hover:text-black lg:text-xl lg:font-semibold bg-primary hover:bg-btnclr'
