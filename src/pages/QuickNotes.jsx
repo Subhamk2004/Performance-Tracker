@@ -28,6 +28,18 @@ function QuickNotes() {
     useEffect(() => {
     }, [deleteNote])
 
+    const styles = `
+.note-highlight {
+    animation: highlight-pulse 2s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 190, 0, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 190, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 190, 0, 0); }
+}
+`;
+
 
     const handleDelete = async (noteId) => {
         try {
@@ -101,7 +113,7 @@ function QuickNotes() {
 
     return (
         <div className='w-full h-full flex flex-col items-start justify-start overflow-scroll no-scrollbar'>
-            <div className='flex flex-col w-full gap-6'>
+            <div className='flex flex-col w-full gap-6 overflow-scroll no-scrollbar'>
                 <div className='flex flex-row flex-wrap items-center justify-start gap-3'>
                     <Search fromWhere='notes' />
                     <button
@@ -174,7 +186,7 @@ function QuickNotes() {
                     </form>
                 )}
 
-                <div className='flex flex-row flex-wrap gap-4 '>
+                <div className='flex flex-row flex-wrap gap-4 overflow-scroll'>
                     {sortedNotes?.map((note) => (
                         <NoteCard
                             key={note._id}

@@ -30,9 +30,11 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
     const renderContent = () => {
         const processedContent = detectCodeBlocks(note.content)
-
+        
         return (
-            <div className="text-gray-300 text-base">
+            <div 
+            id={`note-${note._id}`}
+            className="text-gray-300 text-base">
                 {processedContent.map((part, index) => {
                     if (part.type === "text") {
                         return (
