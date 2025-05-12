@@ -26,22 +26,22 @@ function Navbar() {
     <>
       <button
         onClick={toggleMenu}
-        className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-secondary text-white sm:hidden"
+        className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-secondary text-white md:hidden"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 sm:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
           onClick={toggleMenu}
         />
       )}
 
-      <nav className={`fixed sm:relative h-full w-[280px] sm:w-1/5 min-w-[230px] max-w-[280px] bg-primary rounded-r-3xl sm:rounded-3xl overflow-scroll no-scrollbar flex flex-col items-center justify-between px-2 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-[100%] sm:translate-x-0'
+      <nav className={`fixed md:relative h-full w-[280px] md:w-1/5 min-w-[230px] max-w-[280px] bg-primary rounded-r-3xl md:rounded-3xl overflow-scroll no-scrollbar flex flex-col items-center justify-between px-2 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-[100%] md:translate-x-0'
         }`}>
         <div className='flex flex-col w-full items-center gap-8'>
-          <Link to='/dashboard' className='mt-8 sm:-mt-7 flex flex-row items-center'>
+          <Link to='/dashboard' className='mt-8 md:-mt-7 flex flex-row items-center'>
             <img src={Logo} alt="Logo" />
           </Link>
           <div className='flex w-full flex-col gap-3'>
