@@ -4,6 +4,7 @@ import { set, z } from 'zod';
 import FormInput from '../components/FormInput';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from '../reduxSlices/UserSlice.mjs';
+import InComponentLoading from '../components/InComponentLoading';
 
 
 function Login() {
@@ -93,8 +94,10 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button className='w-full bg-btnclr/80 text-black hover:bg-btnclr font-semibold px-4 py-2 rounded-lg'>
-                    Login
+                <button className='w-full bg-btnclr/80 text-black hover:bg-btnclr font-semibold px-4 py-2 rounded-lg'
+                disabled={loading}>
+                    {loading && <InComponentLoading />}
+                    {!loading && 'Login'}
                 </button>
 
             </form>
