@@ -1,10 +1,8 @@
-
 import { useState } from "react"
 import { Calendar, Hash, Trash, BookOpen } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { detectCodeBlocks } from "../utils/CodeFormatter.js"
 
 const NoteCard = ({ note, onDelete, loading }) => {
     const [showActions, setShowActions] = useState(false)
@@ -23,51 +21,76 @@ const NoteCard = ({ note, onDelete, loading }) => {
         // navigate(`/notes/edit/${note._id}`);
     }
 
-    const formatTextContent = (text) => {
-        // Preserve existing formatting
-        return text
-    }
-
     const renderContent = () => {
-        const processedContent = detectCodeBlocks(note.content)
+        const codeBlockRegex = /```(?:(\w+)?\n)?([\s\S]*?)```/g
+        let contentToRender = note.content
+        const codeBlocks = []
+        let match
+        let lastIndex = 0
+        
+        while ((match = codeBlockRegex.exec(note.content)) !== null) {
+            const language = match[1] || "plaintext"
+            const code = match[2]
+            const fullMatch = match[0]
+            const startIndex = match.index
+            
+            if (startIndex > lastIndex) {
+                codeBlocks.push({
+                    type: "text",
+                    content: note.content.substring(lastIndex, startIndex)
+                })
+            }
+            
+            codeBlocks.push({
+                type: "code",
+                language,
+                content: code
+            })
+            
+            lastIndex = startIndex + fullMatch.length
+        }
+        
+        if (lastIndex < note.content.length) {
+            codeBlocks.push({
+                type: "text",
+                content: note.content.substring(lastIndex)
+            })
+        }
+        
+        if (codeBlocks.length === 0) {
+            return (
+                <div className="whitespace-pre-wrap">{note.content}</div>
+            )
+        }
         
         return (
-            <div 
-            id={`note-${note._id}`}
-            className="text-gray-300 text-base">
-                {processedContent.map((part, index) => {
-                    if (part.type === "text") {
-                        return (
-                            <pre key={index} className="whitespace-pre-line mb-3">
-                                {formatTextContent(part.content)}
-                            </pre>
-                        )
-                    } else if (part.type === "code") {
-                        return (
-                            <div key={index} className="mb-3 rounded-lg overflow-hidden">
-                                <SyntaxHighlighter
-                                    language={part.language}
-                                    style={atomDark}
-                                    customStyle={{
-                                        margin: 0,
-                                        padding: "1rem",
-                                        fontSize: "0.875rem",
-                                        lineHeight: "1.5",
-                                        borderRadius: "0.5rem",
-                                        maxHeight: "300px",
-                                        overflow: "auto",
-                                    }}
-                                    showLineNumbers={true}
-                                    wrapLines={true}
-                                    wrapLongLines={false}
-                                >
-                                    {part.content}
-                                </SyntaxHighlighter>
-                            </div>
-                        )
-                    }
-                    return null
-                })}
+            <div>
+                {codeBlocks.map((block, index) => (
+                    <div key={index} className="mb-2">
+                        {block.type === "text" ? (
+                            <div className="whitespace-pre-wrap">{block.content}</div>
+                        ) : (
+                            <SyntaxHighlighter
+                                language={block.language}
+                                style={atomDark}
+                                customStyle={{
+                                    margin: 0,
+                                    padding: "1rem",
+                                    fontSize: "0.875rem",
+                                    lineHeight: "1.5",
+                                    borderRadius: "0.5rem",
+                                    maxHeight: "300px",
+                                    overflow: "auto",
+                                }}
+                                showLineNumbers={true}
+                                wrapLines={true}
+                                wrapLongLines={false}
+                            >
+                                {block.content}
+                            </SyntaxHighlighter>
+                        )}
+                    </div>
+                ))}
             </div>
         )
     }
@@ -93,8 +116,9 @@ const NoteCard = ({ note, onDelete, loading }) => {
                 )}
             </div>
 
-            <div className={`${clampStyle} flex flex-row min-w-[400px] w-auto max-w-[500px] flex-wrap overflow-scroll mb-3 `}>{renderContent()}</div>
-            
+            <div className={`${clampStyle} flex flex-col min-w-[400px] w-auto max-w-[500px] overflow-auto mb-3`}>
+                {renderContent()}
+            </div>
 
             <div className="flex flex-wrap gap-2 mb-4">
                 {note.hashtags &&
