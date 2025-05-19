@@ -7,7 +7,8 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 const NoteCard = ({ note, onDelete, loading }) => {
     const [showActions, setShowActions] = useState(false)
     const navigate = useNavigate()
-    const [clampStyle, setClampStyle] = useState("line-clamp-3")
+    const [isExpanded, setIsExpanded] = useState(false)
+    const clampStyle = isExpanded ? "" : "line-clamp-3"
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -19,6 +20,11 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
     const handleEdit = () => {
         // navigate(`/notes/edit/${note._id}`);
+    }
+
+    const formatPlainText = (text) => {
+        // Format text to add line breaks after periods (., !, ?)
+        return text.replace(/([.!?])\s+/g, "$1\n");
     }
 
     const renderContent = () => {
@@ -37,7 +43,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
             if (startIndex > lastIndex) {
                 codeBlocks.push({
                     type: "text",
-                    content: note.content.substring(lastIndex, startIndex)
+                    content: formatPlainText(note.content.substring(lastIndex, startIndex))
                 })
             }
             
@@ -53,13 +59,13 @@ const NoteCard = ({ note, onDelete, loading }) => {
         if (lastIndex < note.content.length) {
             codeBlocks.push({
                 type: "text",
-                content: note.content.substring(lastIndex)
+                content: formatPlainText(note.content.substring(lastIndex))
             })
         }
         
         if (codeBlocks.length === 0) {
             return (
-                <div className="whitespace-pre-wrap">{note.content}</div>
+                <div className="whitespace-pre-wrap">{formatPlainText(note.content)}</div>
             )
         }
         
@@ -68,26 +74,28 @@ const NoteCard = ({ note, onDelete, loading }) => {
                 {codeBlocks.map((block, index) => (
                     <div key={index} className="mb-2">
                         {block.type === "text" ? (
-                            <div className="whitespace-pre-wrap">{block.content}</div>
+                            <div className={`whitespace-pre-wrap ${clampStyle}`}>{block.content}</div>
                         ) : (
-                            <SyntaxHighlighter
-                                language={block.language}
-                                style={atomDark}
-                                customStyle={{
-                                    margin: 0,
-                                    padding: "1rem",
-                                    fontSize: "0.875rem",
-                                    lineHeight: "1.5",
-                                    borderRadius: "0.5rem",
-                                    maxHeight: "300px",
-                                    overflow: "auto",
-                                }}
-                                showLineNumbers={true}
-                                wrapLines={true}
-                                wrapLongLines={false}
-                            >
-                                {block.content}
-                            </SyntaxHighlighter>
+                            <div className={clampStyle}>
+                                <SyntaxHighlighter
+                                    language={block.language}
+                                    style={atomDark}
+                                    customStyle={{
+                                        margin: 0,
+                                        padding: "1rem",
+                                        fontSize: "0.875rem",
+                                        lineHeight: "1.5",
+                                        borderRadius: "0.5rem",
+                                        maxHeight: isExpanded ? "500px" : "200px",
+                                        overflow: "auto",
+                                    }}
+                                    showLineNumbers={true}
+                                    wrapLines={true}
+                                    wrapLongLines={false}
+                                >
+                                    {block.content}
+                                </SyntaxHighlighter>
+                            </div>
                         )}
                     </div>
                 ))}
@@ -116,8 +124,14 @@ const NoteCard = ({ note, onDelete, loading }) => {
                 )}
             </div>
 
-            <div className={`${clampStyle} flex flex-col min-w-[400px] w-auto max-w-[500px] overflow-auto mb-3`}>
+            <div className={`flex flex-col min-w-[400px] w-auto max-w-[500px] overflow-auto mb-3`}>
                 {renderContent()}
+                <button 
+                    onClick={() => setIsExpanded(!isExpanded)} 
+                    className="text-[#698eff] text-sm mt-2 hover:underline focus:outline-none self-start"
+                >
+                    {isExpanded ? "Read less" : "Read more"}
+                </button>
             </div>
 
             <div className="flex flex-wrap gap-2 mb-4">
