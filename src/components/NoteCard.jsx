@@ -27,7 +27,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
     }
 
     const renderContent = () => {
-        const codeBlockRegex = /```(?:(\w+)?\n)?([\s\S]*?)```/g
+        const codeBlockRegex = /&&&@@@(?:(\w+)?\n)?([\s\S]*?)@@@&&&/g
         let contentToRender = note.content
         const codeBlocks = []
         let match

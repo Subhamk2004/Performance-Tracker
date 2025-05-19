@@ -23,7 +23,8 @@ function QuickNotes() {
         title: '',
         content: '',
         hashtags: '',
-        username: username
+        username: username,
+        isCode: false // New state to track if content is code
     });
     useEffect(() => {
     }, [deleteNote])
@@ -39,7 +40,6 @@ function QuickNotes() {
     100% { box-shadow: 0 0 0 0 rgba(255, 190, 0, 0); }
 }
 `;
-
 
     const handleDelete = async (noteId) => {
         try {
@@ -68,15 +68,22 @@ function QuickNotes() {
         if (!noteData.title.trim() || !noteData.content.trim() || !noteData.hashtags.trim()) {
             return;
         }
+        
         const hashtagsArray = noteData.hashtags
             .split(',')
             .map(tag => tag.trim())
             .filter(tag => tag)
             .map(tag => tag.startsWith('#') ? tag : `#${tag}`);
 
+        // Process content based on whether it's code or not
+        let processedContent = noteData.content.trim();
+        if (noteData.isCode) {
+            processedContent = `&&&@@@\n${processedContent}\n@@@&&&`;
+        }
+
         const newNoteData = {
             title: noteData.title.trim(),
-            content: noteData.content.trim(),
+            content: processedContent, // Use the processed content
             hashtags: hashtagsArray,
             username: username
         };
@@ -100,7 +107,8 @@ function QuickNotes() {
                     title: '',
                     content: '',
                     hashtags: '',
-                    username: username
+                    username: username,
+                    isCode: false
                 });
                 setShowForm(false);
             }
@@ -158,12 +166,38 @@ function QuickNotes() {
                             name='content'
                             value={noteData.content}
                             isRequired={true}
-                            placeholder='Enter note content'
+                            placeholder={noteData.isCode ? 'Enter code here' : 'Enter note content'}
                             label='Content'
-                            inputClassName='bg-primary/50 h-24'
+                            inputClassName={`bg-primary/50 h-24 ${noteData.isCode ? 'font-mono' : ''}`}
                             labelClassName='ml-1'
                             onChange={(e) => setNoteData({ ...noteData, content: e.target.value })}
                         />
+                        
+                        {/* Content Type Selection */}
+                        <div className='flex flex-row items-center gap-4 ml-1'>
+                            <div className='font-semibold'>Content Type:</div>
+                            <div className='flex items-center gap-2'>
+                                <input
+                                    type='radio'
+                                    id='text-content'
+                                    name='content-type'
+                                    checked={!noteData.isCode}
+                                    onChange={() => setNoteData({ ...noteData, isCode: false })}
+                                />
+                                <label htmlFor='text-content'>Text</label>
+                            </div>
+                            <div className='flex items-center gap-2'>
+                                <input
+                                    type='radio'
+                                    id='code-content'
+                                    name='content-type'
+                                    checked={noteData.isCode}
+                                    onChange={() => setNoteData({ ...noteData, isCode: true })}
+                                />
+                                <label htmlFor='code-content'>Code</label>
+                            </div>
+                        </div>
+                        
                         <FormInput
                             title="Hashtags"
                             type='text'
