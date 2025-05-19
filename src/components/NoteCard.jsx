@@ -23,7 +23,6 @@ const NoteCard = ({ note, onDelete, loading }) => {
     }
 
     const formatPlainText = (text) => {
-        // Format text to add line breaks after periods (., !, ?)
         return text.replace(/([.!?])\s+/g, "$1\n");
     }
 
@@ -105,11 +104,11 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
     return (
         <div
+            id={`note-${note._id}`}
             className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg shadow-lg shadow-black cursor-pointer"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
             onClick={(e) => {
-                // Prevent navigation if clicking on action buttons
                 if (e.target.closest('button')) return;
                 handleEdit();
             }}
@@ -135,7 +134,10 @@ const NoteCard = ({ note, onDelete, loading }) => {
             <div className={`flex flex-col min-w-[400px] w-auto max-w-[500px] overflow-auto mb-3`}>
                 {renderContent()}
                 <button 
-                    onClick={() => setIsExpanded(!isExpanded)} 
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setIsExpanded(!isExpanded);
+                    }} 
                     className="text-[#698eff] text-sm mt-2 hover:underline focus:outline-none self-start"
                 >
                     {isExpanded ? "Read less" : "Read more"}
