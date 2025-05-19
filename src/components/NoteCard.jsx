@@ -19,7 +19,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
     }
 
     const handleEdit = () => {
-        // navigate(`/notes/edit/${note._id}`);
+        navigate(`/notes/edit/${note._id}`);
     }
 
     const formatPlainText = (text) => {
@@ -105,9 +105,14 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
     return (
         <div
-            className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg shadow-lg shadow-black"
+            className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg shadow-lg shadow-black cursor-pointer"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
+            onClick={(e) => {
+                // Prevent navigation if clicking on action buttons
+                if (e.target.closest('button')) return;
+                handleEdit();
+            }}
         >
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
@@ -117,6 +122,9 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
                 {showActions && (
                     <div className="flex items-center gap-3">
+                        <button onClick={handleEdit} className="text-gray-400 hover:text-[#698eff] transition-colors">
+                            <BookOpen size={18} />
+                        </button>
                         <button onClick={() => onDelete(note._id)} className="text-gray-400 hover:text-red-500 transition-colors">
                             <Trash size={18} />
                         </button>
