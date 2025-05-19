@@ -24,7 +24,11 @@ const NoteCard = ({ note, onDelete, onEdit, loading }) => {
     }
 
     const formatPlainText = (text) => {
-        return text.replace(/([.!?])\s+/g, "$1\n");
+        // First replace existing punctuation with a newline
+        let formatted = text.replace(/([.!?])\s+/g, "$1\n");
+        // Then add an extra blank line after every period at the end of a line
+        formatted = formatted.replace(/\.\n/g, ".\n\n");
+        return formatted;
     }
 
     const renderContent = () => {
