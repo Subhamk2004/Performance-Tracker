@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { Calendar, Hash, Trash, BookOpen } from "lucide-react"
+import { Calendar, Hash, Trash, BookOpen, Edit } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
-const NoteCard = ({ note, onDelete, loading }) => {
+const NoteCard = ({ note, onDelete, onEdit, loading }) => {
     const [showActions, setShowActions] = useState(false)
     const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(false)
@@ -18,8 +18,9 @@ const NoteCard = ({ note, onDelete, loading }) => {
         })
     }
 
-    const handleEdit = () => {
-        // navigate(`/notes/edit/${note._id}`);
+    const handleEdit = (e) => {
+        e.stopPropagation();
+        onEdit(note);
     }
 
     const formatPlainText = (text) => {
@@ -92,7 +93,6 @@ const NoteCard = ({ note, onDelete, loading }) => {
                                     wrapLines={true}
                                     wrapLongLines={false}
                                 >
-                                    {/* {block.language} */}
                                     {block.content}
                                 </SyntaxHighlighter>
                             </div>
@@ -109,10 +109,6 @@ const NoteCard = ({ note, onDelete, loading }) => {
             className="bg-secondary rounded-3xl p-6 transition-all hover:shadow-lg shadow-lg shadow-black cursor-pointer"
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
-            onClick={(e) => {
-                if (e.target.closest('button')) return;
-                handleEdit();
-            }}
         >
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
@@ -122,10 +118,19 @@ const NoteCard = ({ note, onDelete, loading }) => {
 
                 {showActions && (
                     <div className="flex items-center gap-3">
-                        <button onClick={handleEdit} className="text-gray-400 hover:text-[#698eff] transition-colors">
-                            <BookOpen size={18} />
+                        <button 
+                            onClick={handleEdit} 
+                            className="text-gray-400 hover:text-[#698eff] transition-colors"
+                        >
+                            <Edit size={18} />
                         </button>
-                        <button onClick={() => onDelete(note._id)} className="text-gray-400 hover:text-red-500 transition-colors">
+                        <button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(note._id);
+                            }} 
+                            className="text-gray-400 hover:text-red-500 transition-colors"
+                        >
                             <Trash size={18} />
                         </button>
                     </div>
