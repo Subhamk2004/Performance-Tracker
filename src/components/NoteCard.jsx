@@ -19,7 +19,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
     }
 
     const handleEdit = () => {
-        navigate(`/notes/edit/${note._id}`);
+        // navigate(`/notes/edit/${note._id}`);
     }
 
     const formatPlainText = (text) => {
@@ -77,7 +77,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
                         ) : (
                             <div className={clampStyle}>
                                 <SyntaxHighlighter
-                                    language={block.language}
+                                    language="javascript"
                                     style={atomDark}
                                     customStyle={{
                                         margin: 0,
@@ -92,6 +92,7 @@ const NoteCard = ({ note, onDelete, loading }) => {
                                     wrapLines={true}
                                     wrapLongLines={false}
                                 >
+                                    {/* {block.language} */}
                                     {block.content}
                                 </SyntaxHighlighter>
                             </div>
