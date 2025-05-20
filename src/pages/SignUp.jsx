@@ -184,7 +184,8 @@ function Signup() {
                         labelClassName='ml-1'
                         onChange={(e) => setUser(prev => ({ ...prev, pat: e.target.value }))}
                         value={user.pat}
-                        alertText="This is required to fetch your private repositories. Rest assured, your token will be encrypted and never disclosed"
+                        alertText="This is required to fetch your private repositories. Rest assured, your token will be encrypted and never disclosed.
+                        This will be soon replaced with the Github authentication system"
                     />
                 )}
                 <FormInput
