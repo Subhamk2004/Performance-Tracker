@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import RepoCard from '../components/RepoCard'
-import { Github, HistoryIcon } from 'lucide-react'
+import { Github, HistoryIcon, PlusCircle } from 'lucide-react'
 import ActiveTaskCard from '../components/ActiveTaskCard'
 import StreakCard from '../components/StreakCard'
 import DashboardBtn from '../components/DashboardBtn'
@@ -8,7 +8,7 @@ import getGithubRepos from '../hooks/useGithubRepos.mjs'
 import Search from '../components/Search'
 import IncomponentLoading from '../components/InComponentLoading'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useTasks from '../hooks/useTasks.mjs'
 
 function Dashboard() {
@@ -45,10 +45,16 @@ function Dashboard() {
           <StreakCard />
           <DashboardBtn />
         </div>
-        <h2 className='mt-4 mb-4 flex flex-row items-center gap-3 text-white text-xl font-semibold'>
-          <Github size='24' className='text-white' />
-          Recent GitHub Activity
-        </h2>
+        <div className='flex flex-row items-center gap-5'>
+          <h2 className='mt-4 mb-4 flex flex-row items-center gap-3 text-white text-xl font-semibold'>
+            <Github size='24' className='text-white' />
+            Recent GitHub Activity
+          </h2>
+          <Link className="flex flex-row items-center gap-2 bg-gradient-to-tl from-blue-500 via-secondary to-secondary text-white rounded-full px-4 py-2 hover:scale-105 transition-all" to='https://github.com/new' target='_blank'>
+            <PlusCircle size='24' className='text-white' />
+            New Repo
+          </Link>
+        </div>
         {
           loading ?
             <IncomponentLoading isShort={true} />
